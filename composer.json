@@ -8,18 +8,11 @@
             "email": "james@acw.uk.com"
         }
     ],
-    "repositories": [   
-        {
-            "type": "git",
-            "url": "https://github.com/ACWLtd/Utility"
-        }
-    ],    
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "4.2.*",
         "baum/baum": "1.0.13",
-        "rydurham/sentinel": "dev-master",
-        "kjamesy/utility": "dev-master"
+        "rydurham/sentinel": "dev-master"
     },
     "autoload": {
         "classmap": [
