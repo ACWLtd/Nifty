@@ -1,0 +1,20 @@
+				<div class="row" style="margin-bottom: 20px;">
+  					<div class="form-group col-xs-4">
+			    		<input type="text" id="{{ customField.meta_key }}" class="form-control" data-ng-trim="" data-ng-model="customField.meta_key" />
+			    	</div>
+			    	<div class="form-group col-xs-7">
+			    		<textarea data-ng-show="customField.hiddenEditor" id="{{ customField.meta_key }}_value" class="form-control" data-ng-trim="" rows="4" data-ng-model="customField.meta_value"></textarea>
+			    		<div data-ng-if="! customField.hiddenEditor" ckeditor="" data-ng-model="$parent.$parent.customField.meta_value" placeholder="Value"></div>
+			    	</div>
+			    	<div class="form-group col-xs-1">
+			    		<span data-ng-hide="customField.updating" data-ng-if="customField.hiddenEditor" class="btn btn-default btn-rect" data-ng-click="toggleFieldsEditor($index, false)" title="Open In Editor" style="margin-bottom: 5px;">
+			    			<i class="fa fa-paragraph"></i>
+			    		</span>
+			    		<span data-ng-hide="customField.updating" data-ng-if="! customField.hiddenEditor" class="btn btn-default btn-rect" data-ng-click="toggleFieldsEditor($index, true)" title="Close Editor" style="margin-bottom: 5px;">
+			    			<i class="fa fa-file-text-o"></i>
+			    		</span>			    		
+			    		<span data-ng-hide="customField.updating" class="btn btn-metis-5 btn-rect" data-ng-click="updateCustomField($index)" title="Update Custom Field" style="margin-bottom: 5px;"><i class="fa fa-check"></i></span>
+			    		<span data-ng-hide="customField.updating" class="btn btn-metis-1 btn-rect" data-ng-click="destroyCustomField($index)" title="Destroy Custom Field"><i class="fa fa-trash"></i></span>
+			    		<span data-ng-show="customField.updating"><img src="../packages/kjamesy/cms/images/ajax-loader.gif" /></span>
+			    	</div>
+			    </div>

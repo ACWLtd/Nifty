@@ -1,0 +1,161 @@
+<div class="col-lg-12">
+    <div class="box info">
+        <header>
+            <div class="icons">
+                <i class="fa fa-flag-o"></i>
+            </div>
+            <h5>Users</h5>
+            <div class="toolbar">
+                <a class="btn btn-metis-1 btn-sm btn-rect" href="" data-ng-click="createUser()"><span class="fa fa-pencil"></span> New User</a>
+            </div>
+        </header>
+    </div>
+</div>
+<div class="col-md-12" data-ng-cloak="">
+    <div class="row">   
+        <div class="col-sm-12" style="margin-bottom: 20px;">         
+            <form class="form-inline">             
+                <div class="form-group" style="margin-right: 30px;">
+                    <label class="control-label" for="order">Sort</label>
+                    <select name="order" data-ng-model="options.orderParam" id="order" class="form-control">
+                        <option value="email">Default (Email)</option>
+                        <option value="first_name">Name (A to Z)</option>
+                        <option value="-first_name">Name (Z to A)</option> 
+                        <option value="username">Username (A to Z)</option>
+                        <option value="-username">Username (Z to A)</option>                          
+                        <option value="email">Email (A to Z)</option>
+                        <option value="-email">Email (Z to A)</option>   
+                        <option value="status">Status (A to Z)</option>
+                        <option value="-status">Status (Z to A)</option>                                                                     
+                        <option value="-created_at">Date Created (New to Old)</option>
+                        <option value="created_at">Date Created (Old to New)</option>
+                        <option value="-last_login">Last Login (Recent to Old)</option>
+                        <option value="last_login">Last Login (Old to Recent)</option>
+                    </select> 
+                </div>    
+                <div class="form-group" style="margin-right: 30px;">
+                    <label class="control-label" for="filter">Filter</label>
+                    <input type="search" data-ng-model="query.first_name" id="filter" placeholder="First Name" class="form-control" />   
+                </div>     
+                <div class="form-group">
+                    <label class="control-label" for="items-per-page">Items Per Page</label>
+                    <select name="items-per-page" data-ng-model="pageSize" id="items-per-page" class="form-control">
+                        <option value="0">All</option>
+                        <option value="2">2</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>    
+                </div>                                                   
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12" style="margin-bottom: 20px">
+            <div class="alert alert-info animate" role="alert" data-ng-class="formFields.hasMessage ? 'visible' : ''">
+                <span data-ng-bind-html="formFields.message | trusted"></span> 
+            </div>      
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 animate" data-ng-class="options.editingUser ? 'visible' : 'hidden'" style="margin-bottom: 20px" data-ng-include="'../packages/kjamesy/cms/angular-partials/users.edit-form.html'"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 animate" data-ng-class="options.creatingUser ? 'visible' : 'hidden'" style="margin-bottom: 20px" data-ng-include="'../packages/kjamesy/cms/angular-partials/users.create-form.html'"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name 
+                                <a href="" data-ng-click="options.orderParam = 'first_name'"><i class="fa fa-angle-down"></i></a> 
+                                <a href="" data-ng-click="options.orderParam = '-first_name'"><i class="fa fa-angle-up"></i></a>
+                            </th>
+                            <th>
+                                Username 
+                                <a href="" data-ng-click="options.orderParam = 'username'"><i class="fa fa-angle-down"></i></a> 
+                                <a href="" data-ng-click="options.orderParam = '-username'"><i class="fa fa-angle-up"></i></a>
+                            </th>                            
+                            <th>
+                                Email 
+                                <a href="" data-ng-click="options.orderParam = 'email'"><i class="fa fa-angle-down"></i></a> 
+                                <a href="" data-ng-click="options.orderParam = '-email'"><i class="fa fa-angle-up"></i></a>
+                            </th>
+                            <th>
+                                Status
+                                <a href="" data-ng-click="options.orderParam = 'status'"><i class="fa fa-angle-down"></i></a> 
+                                <a href="" data-ng-click="options.orderParam = '-status'"><i class="fa fa-angle-up"></i></a>                                
+                            </th>
+                            <th>
+                                Date Created 
+                                <a href="" data-ng-click="options.orderParam = 'created_at'"><i class="fa fa-angle-down"></i></a> 
+                                <a href="" data-ng-click="options.orderParam = '-created_at'"><i class="fa fa-angle-up"></i></a>
+                            </th>
+                            <th>
+                                last Login 
+                                <a href="" data-ng-click="options.orderParam = 'updated_at'"><i class="fa fa-angle-down"></i></a> 
+                                <a href="" data-ng-click="options.orderParam = '-updated_at'"><i class="fa fa-angle-up"></i></a>
+                            </th>
+                            <th colspan="4">
+                                Options
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="user in users | itemsPerPage: pageSize | filter:query | orderBy:options.orderParam:reverse" class="user-row hover-row">
+                            <td>
+                                <span data-ng-if="user.first_name || user.last_name">{{ user.first_name }} {{ user.last_name }} </span>
+                                <span data-ng-if="!user.first_name && !user.last_name"> - </span>
+                            </td>
+                            <td>
+                                <span data-ng-if="user.username">{{ user.username }}</span>
+                                <span data-ng-if="! user.username"> - </span>
+                            </td>
+                            <td>
+                                {{ user.email }}
+                            </td>
+                            <td>
+                                {{ user.status }}
+                            </td>
+                            <td>
+                                <abbr title="{{ user.created_at | dateToISO | date:'niftyLongDate' }}">{{ user.created_at | dateToISO | date:'niftyShortDate' }}</abbr>
+                            </td>
+                            <td>
+                                <span data-ng-if="user.last_login">
+                                    <abbr title="{{ user.last_login | dateToISO | date:'niftyLongDate' }}">{{ user.last_login | dateToISO | date:'niftyShortDate' }}</abbr>
+                                </span>
+                                <span data-ng-if="! user.last_login">
+                                    Never
+                                </span>
+                            </td>
+                            <td>
+                                <span class="btn btn-metis-5 btn-sm btn-rect" title="Edit" data-ng-click="editUser(user)"><i class="fa fa-edit"></i></span>
+                            </td>
+                            <td>
+                                <span data-ng-if="user.status == 'Suspended'" class="btn btn-success btn-sm btn-rect" title="Unsuspend" data-ng-click="unSuspend(user)"><i class="fa fa-clock-o"></i></span>
+                                <span data-ng-if="user.status != 'Suspended'" class="btn btn-default btn-sm btn-rect" title="Suspend" data-ng-click="suspend(user)"><i class="fa fa-clock-o"></i></span>
+                            </td>
+                            <td>
+                                <span data-ng-if="user.status == 'Banned'" class="btn btn-success btn-sm btn-rect" title="Unban" data-ng-click="unBan(user)"><i class="fa fa-ban"></i></span>
+                                <span data-ng-if="user.status != 'Banned'" class="btn btn-metis-3 btn-sm btn-rect" title="Ban" data-ng-click="ban(user)"><i class="fa fa-ban"></i></span>
+                            </td>
+                            <td>
+                                <span class="btn btn-metis-1 btn-sm btn-rect" title="Delete" data-ng-click="destroy(user)" data-ng-hide="user.deleting"><i class="fa fa-trash"></i></span>
+                                <span data-ng-show="user.deleting"><img src="../packages/kjamesy/cms/images/ajax-loader.gif" /></span>
+                            </td>                                                                                    
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <dir-pagination-controls template-url="../packages/kjamesy/cms/angular-modules/dirPagination.tpl.html"></dir-pagination-controls>
+        </div>
+    </div>    
+</div>

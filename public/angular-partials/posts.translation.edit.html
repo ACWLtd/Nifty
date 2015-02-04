@@ -1,0 +1,68 @@
+<div class="col-lg-12">
+    <div class="box info">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Edit Translation</h5>
+            <div class="toolbar">
+            	<a class="btn btn-metis-1 btn-sm btn-flat" data-ui-sref="edit({id:options.postId})"><span class="fa fa-angle-double-left"></span> Back to Post</a>
+                <a class="btn btn-metis-1 btn-sm btn-flat" data-ui-sref="home"><span class="fa fa-list"></span> All Posts</a>
+            </div>
+        </header>
+    </div>
+</div>
+<div class="col-md-12">
+	<h3 data-ng-cloak="">{{ options.locale.toUpperCase() }} <i class="fa fa-edit"></i> {{ edit.title }}</h3> 
+
+	<div class="alert alert-info animate" role="alert" data-ng-class="options.hasMessage ? 'visible' : ''" data-ng-trim="">
+		<span  data-ng-bind-html="options.message | trusted"></span>
+	</div>
+
+	<form data-ng-submit="processForm()">	
+		<div class="col-md-9" style="padding-left: 0">                 
+		    <div class="form-group">
+		    	<label for="title" class="control-label">Title</label>
+		    	<input type="text" id="title" class="form-control" data-ng-trim="" data-ng-model="edit.title" />
+		    </div>
+		    <div class="form-group">
+		    	<label for="summary" class="control-label">Summary</label>
+		    	<textarea id="summary" class="form-control" data-ng-trim="" rows="3" data-ng-model="edit.summary"></textarea>
+		    </div>
+		    <div class="form-group">
+		    	<label for="content" class="control-label">Content</label>	    	
+		    	<textarea ckeditor="options" id="content" data-ng-model="edit.content" ready="onReady()" class="form-control" data-ng-trim=""></textarea>
+		    </div>
+		    <div data-ng-if="customFields.length"><h4>Custom Fields</h4> </div>
+		    <div data-ng-repeat="customField in customFields" data-ng-include="'../packages/kjamesy/cms/angular-partials/custom-field.html'"></div>			      
+		</div>
+		<div class="col-md-2 col-md-offset-1">
+		    <div class="form-group">
+		    	<label for="slug" class="control-label">Url Slug</label>
+		    	<input type="text" id="slug" class="form-control" data-ng-trim="" data-ng-model="edit.slug" /> 
+		    </div>  		
+		    <div class="form-group">
+		    	<label for="is_online" class="control-label">Draft/Publish</label>
+		    	<select class="form-control" id="is_online" data-ng-model="selects.is_online" data-ng-options="option as option.label for option in options.onlineOptions"></select>
+		    </div>
+		    <div class="form-group">
+		    	<label class="control-label"><i class="fa fa-warning text-danger"></i> <a class="btn btn-metis-1 btn-sm" href="" data-ng-click="destroy()" title="Destroy"><i class="fa fa-trash"></i></a></label>
+		    </div>  
+		    <div class="form-group" style="text-align: right; margin-top: 60px;">
+		        <button type="submit" class="btn btn-metis-5 btn-rect btn-lg" data-ng-disabled="options.disabledSubmit"><i class="fa fa-floppy-o"></i> Save</button>
+		    </div>			     		    		    
+		</div>
+		<div class="col-md-9" style="padding-left: 0"> 
+			<div data-ng-show="options.customFieldForm" ng-include="'../packages/kjamesy/cms/angular-partials/custom-field-form.html'"></div>
+		</div>
+		<div class="col-md-3"></div>
+		<div class="col-md-12" style="padding-left: 0; margin-bottom: 30px;">
+			<div><span class="btn btn-rect btn-default" data-ng-click="showCustomFieldForm()" data-ng-hide="options.customFieldForm"><i class="fa fa-plus-square-o"></i> Custom Field</span></div>
+		</div>		
+	</form>
+	<div>
+		<script type="text/js-lazy" data-ng-if="options.showEditor">
+		    CKFinder.setupCKEditor(null, '../packages/kjamesy/cms/ckfinder2.4');		  	
+		</script>
+	</div>
+</div>

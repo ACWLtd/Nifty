@@ -1,0 +1,30 @@
+		    <div class="form-group">
+		    	<label for="meta_key" class="control-label">
+		    		<abbr title="This will be changed into a slug">Key</abbr> - 
+		    		<span data-ng-if="options.isSelect">Select / <span class="btn-link" data-ng-click="toggleSelect(false)">Enter New</span> </span>  
+		    		<span data-ng-if="! options.isSelect">Enter New / <span class="btn-link" data-ng-click="toggleSelect(true)">Select</span> </span> 
+		    	</label>
+		    	<select class="form-control" id="meta_key" data-ng-show="options.isSelect" data-ng-model="custom.meta_key" data-ng-options="option for option in options.metaKeys"></select>
+		    	<input type="text" id="meta_key" data-ng-hide="options.isSelect" class="form-control" data-ng-trim="" data-ng-model="custom.meta_key" />
+		    </div>
+		    <div class="form-group">
+		    	<label for="meta_value" class="control-label">Value -
+		    		<span data-ng-if="options.hiddenEditor" class="btn-link" data-ng-click="toggleEditor(false)">Launch Editor</span>
+					<span data-ng-if="! options.hiddenEditor" class="btn-link" data-ng-click="toggleEditor(true)">Hide Editor</span>
+		    	</label>
+		    	<textarea data-ng-show="options.hiddenEditor" id="meta_value" class="form-control" data-ng-trim="" rows="4" data-ng-model="custom.meta_value"></textarea>
+		    	<div data-ng-if="! options.hiddenEditor" ckeditor="" data-ng-model="$parent.$parent.custom.meta_value" placeholder="Value"></div>
+		    </div>
+		    <div class="form-group">
+		    	<span style="float: left">
+			    	<span class="btn btn-rect btn-metis-5" data-ng-hide="custom.saving" title="Save Custom Field" data-ng-click="addCustomField(custom)">
+			    		<i class="fa" data-ng-class="( custom.meta_key.length && custom.meta_value.length ) ? 'fa-floppy-o' : 'fa-pencil-square-o'"></i>
+			    	</span>
+			    	<span data-ng-show="custom.saving"><img src="../packages/kjamesy/cms/images/ajax-loader.gif" /></span>
+				</span>
+		    	<span style="float: right">
+			    	<span class="btn btn-rect btn-metis-3" title="Cancel" data-ng-click="hideCustomFieldForm()">
+			    		<i class="fa fa-times"></i>
+			    	</span>	
+			    </span>		    
+		    </div>

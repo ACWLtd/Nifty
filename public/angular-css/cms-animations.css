@@ -1,0 +1,5 @@
+
+/*.ng-enter        { animation: slideInRight 1s both ease-in; }*/
+/*.ng-leave        { transform-origin: 0% 0%; animation: slideOutLeft 1s both ease-in; }*/
+
+.ng-show { animation: zoomInUp 0.8s both ease-in; }

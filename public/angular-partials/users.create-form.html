@@ -1,0 +1,64 @@
+            <form data-ng-submit="addUser()" name="createForm">
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-sm-4">
+                        <form-group class="{{ userCreate.first_name.error ? 'has-error' : '' }}">
+                            <label for="create_first_name" class="control-label">First Name *</label>
+                            <input type="text" class="form-control" id="create_first_name" data-ng-model="userCreate.first_name" placeholder="First Name" />              
+                        </form-group>
+                    </div>
+                    <div class="col-sm-4">
+                        <form-group class="{{ userCreate.last_name.error ? 'has-error' : '' }}">
+                            <label for="create_last_name" class="control-label">Last Name *</label>
+                            <input type="text" class="form-control" id="create_last_name" data-ng-model="userCreate.last_name" placeholder="Last Name" />              
+                        </form-group>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-sm-4">
+                        <form-group class="{{ userCreate.email.error ? 'has-error' : '' }}">
+                            <label for="create_email" class="control-label">Email *</label>
+                            <input type="text" class="form-control" id="create_email" data-ng-model="userCreate.email" placeholder="Email" />              
+                        </form-group>
+                    </div>
+                    <div class="col-sm-4">
+                        <form-group class="{{ userCreate.username.error ? 'has-error' : '' }}">
+                            <label for="create_username" class="control-label">Username</label>
+                            <input type="text" class="form-control" id="create_username" data-ng-model="userCreate.username" placeholder="Username" />              
+                        </form-group>
+                    </div>                    
+                </div>  
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-sm-4">
+                        <form-group class="{{ userCreate.password.error ? 'has-error' : '' }}">
+                            <label for="create_password" class="control-label">Password</label>
+                            <input type="password" class="form-control" id="create_password" data-ng-model="userCreate.password" placeholder="Password" />              
+                        </form-group>
+                    </div>
+                    <div class="col-sm-4">
+                        <form-group class="{{ userCreate.password.error ? 'has-error' : '' }}">
+                            <label class="control-label">Password Confirmation</label>
+                            <input type="password" class="form-control" id="create_password" data-ng-model="userCreate.password_confirmation" placeholder="Password Confirmation" />  
+                        </form-group>
+                    </div>
+                </div>                   
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-sm-4">
+                        <form-group>
+                            <label for="create_groups" class="control-label">Role</label>
+                            <select class="form-control" id="create_groups" data-ng-model="selects.groups" data-ng-options="option as option.name for option in options.groups"></select>                            
+                        </form-group>
+                    </div>
+                    <div class="col-sm-4">
+                        <form-group class="pull-left">
+                            <span class="btn btn-metis-3 btn-lg btn-rect" data-ng-disabled="options.addingUser" data-ng-click="cancelCreate()">
+                                <i class="fa fa-times"></i> Cancel
+                            </span>        
+                        </form-group>                    
+                        <form-group class="pull-right">
+                            <button class="btn btn-metis-5 btn-lg btn-rect" type="submit" data-ng-disabled="options.addingUser">
+                                <i class="fa fa-floppy-o"></i> Save
+                            </button>             
+                        </form-group>
+                    </div>
+                </div>                             
+            </form> 

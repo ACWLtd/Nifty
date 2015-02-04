@@ -1,0 +1,127 @@
+<div class="col-lg-12">
+    <div class="box info">
+        <header>
+            <div class="icons">
+                <i class="fa fa-flag-o"></i>
+            </div>
+            <h5>Categories</h5>
+            <div class="toolbar">
+            </div>
+        </header>
+    </div>
+</div>
+<div class="col-md-12" data-ng-cloak="">
+    <div class="row">   
+        <div class="col-sm-12" style="margin-bottom: 20px;">         
+            <form class="form-inline">             
+                <div class="form-group" style="margin-right: 30px;">
+                    <label class="control-label" for="order">Sort</label>
+                    <select name="order" data-ng-model="options.orderParam" id="order" class="form-control">
+                        <option value="default">Default (Name)</option>
+                        <option value="name">Name (A to Z)</option>
+                        <option value="-name">Name (Z to A)</option>
+                        <option value="posts">Posts (Asc)</option>
+                        <option value="-posts">Posts (Desc)</option>                          
+                        <option value="-created_at">Date Created (New to Old)</option>
+                        <option value="created_at">Date Created (Old to New)</option>
+                        <option value="-updated_at">Date Updated (New to Old)</option>
+                        <option value="updated_at">Date Updated (Old to New)</option>
+                    </select> 
+                </div>    
+                <div class="form-group" style="margin-right: 30px;">
+                    <label class="control-label" for="filter">Filter</label>
+                    <input type="search" data-ng-model="query.name" id="filter" placeholder="Category Name" class="form-control" />   
+                </div>     
+                <div class="form-group">
+                    <label class="control-label" for="items-per-page">Items Per Page</label>
+                    <select name="items-per-page" data-ng-model="pageSize" id="items-per-page" class="form-control">
+                        <option value="0">All</option>
+                        <option value="2">2</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>    
+                </div>                                                   
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12" style="margin-bottom: 20px">
+            <div class="alert alert-info animate" role="alert" data-ng-class="formFields.hasMessage ? 'visible' : ''">
+                <span data-ng-bind-html="formFields.message | trusted"></span> 
+            </div>      
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4" style="margin-bottom: 20px">
+            <form data-ng-submit="saveCategory(newCat)">
+                <form-group class="{{ newCat.error ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <input type="text" class="form-control" data-ng-model="newCat.name" placeholder="New Category Name" data-ng-disabled="savingNewCat" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-metis-5" type="button" data-ng-disabled="savingNewCat" data-ng-click="saveCategory(newCat)"><i class="fa" data-ng-class="newCat.name.length ? 'fa-floppy-o' : 'fa-pencil-square-o'"></i></button>
+                        </span>
+                    </div>              
+                </form-group>
+            </form>   
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name <a href="" data-ng-click="options.orderParam = 'name'"><i class="fa fa-angle-down"></i></a> <a href="" data-ng-click="options.orderParam = '-name'"><i class="fa fa-angle-up"></i></a></th>
+                            <th colspan="{{ options.locales.length }}">Translations</th>
+                            <th>Posts # <a href="" data-ng-click="options.orderParam = 'posts'"><i class="fa fa-angle-down"></i></a> <a href="" data-ng-click="options.orderParam = '-posts'"><i class="fa fa-angle-up"></i></a></th>
+                            <th>Date Created <a href="" data-ng-click="options.orderParam = 'created_at'"><i class="fa fa-angle-down"></i></a> <a href="" data-ng-click="options.orderParam = '-created_at'"><i class="fa fa-angle-up"></i></a></th>
+                            <th>Date Updated <a href="" data-ng-click="options.orderParam = 'updated_at'"><i class="fa fa-angle-down"></i></a> <a href="" data-ng-click="options.orderParam = '-updated_at'"><i class="fa fa-angle-up"></i></a></th>
+                            <th colspan="2">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="category in categories | itemsPerPage: pageSize | filter:query | orderBy:options.orderParam:reverse" class="category-row hover-row">
+                            <td data-ng-dblclick="editCategory(category)">
+                                <span data-ng-hide="category.editing">{{ category.name }}</span>
+                                <span data-ng-if="category.saving"><img src="../../packages/kjamesy/cms/images/ajax-loader.gif" /></span>
+                                <form data-ng-submit="doneEditing(category)" data-ng-show="category.editing">
+                                    <form-group class="{{ category.error ? 'has-error' : '' }}">
+                                        <input class="form-control" data-ng-model="category.name">
+                                    </form-group>
+                                </form>   
+                            </td>
+                            <td data-ng-repeat="locale in options.locales" data-ng-init="chosen = category.translations.indexOf(locale.locale) > -1 ? true : false"> 
+                                <a class="btn btn-sm btn-metis-5" title="Edit Translation" data-ng-if="chosen" data-ui-sref="editTranslation({ categoryId:category.id, localeId:locale.id })">
+                                    <i class='fa fa-edit'></i> {{ locale.locale.toUpperCase() }}
+                                </a>
+                                <a class="btn btn-sm btn-metis-3" title="Create Translation" data-ng-if="! chosen" data-ui-sref="createTranslation({ categoryId:category.id, localeId:locale.id })">
+                                    <i class='fa fa-pencil'></i> {{ locale.locale.toUpperCase() }}
+                                </a>
+                            </td>
+                            <td>{{ category.posts }}</td>
+                            <td><abbr title="{{ category.created_at | dateToISO | date:'niftyLongDate' }}">{{ category.created_at | dateToISO | date:'niftyShortDate' }}</abbr></td>
+                            <td><abbr title="{{ category.updated_at | dateToISO | date:'niftyLongDate' }}">{{ category.updated_at | dateToISO | date:'niftyShortDate' }}</abbr></td>
+                            <td>
+                                <a class="btn btn-metis-5 btn-sm" href="" data-ng-click="category.editing ? doneEditing(category) : editCategory(category)" title="Edit"><i class="fa" data-ng-class="category.editing ? 'fa-floppy-o' : 'fa-pencil'"></i></a>
+                            </td>
+                            <td>
+                                <span data-ng-if="category.id != 1">
+                                    <i class="fa fa-warning text-danger"></i> <a class="btn btn-metis-1 btn-sm" href="" data-ng-click="destroy($index, category.id)" title="Destroy"><i class="fa fa-trash"></i></a>
+                                </span>
+                                 <span data-ng-if="category.id == 1">
+                                     &nbsp;
+                                 </span>
+                            </td>  
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <dir-pagination-controls template-url="../../packages/kjamesy/cms/angular-modules/dirPagination.tpl.html"></dir-pagination-controls>
+        </div>
+    </div>    
+</div>

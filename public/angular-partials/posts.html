@@ -1,0 +1,150 @@
+<div class="col-lg-12">
+    <div class="box info">
+        <header>
+            <div class="icons">
+                <i class="fa fa-flag-o"></i>
+            </div>
+            <h5>Posts</h5>
+            <div class="toolbar">
+                <a class="btn btn-metis-1 btn-sm btn-flat" data-ui-sref="create"><span class="fa fa-pencil"></span> New Post</a>
+            </div>
+        </header>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="posts-row" data-ng-cloak=""> <!-- data-ng-show="posts[0]" -->
+        <div class="row">
+            <div class="col-sm-12" style="margin-bottom: 20px;">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="{{ options.activeTab == 'all' ? 'active' : '' }}"><a href="" data-ng-click="showPosts('all')">All Posts <span class="badge">{{ postCategories.all.length }}</span></a></li>
+                    <li role="presentation" class="{{ options.activeTab == 'published' ? 'active' : '' }}"><a href="" data-ng-click="showPosts('published')">Published <span class="badge">{{ postCategories.published.length }}</span></a></li>
+                    <li role="presentation" class="{{ options.activeTab == 'drafts' ? 'active' : '' }}"><a href="" data-ng-click="showPosts('drafts')">Drafts <span class="badge">{{ postCategories.drafts.length }}</span></a></li>
+                    <li role="presentation" class="{{ options.activeTab == 'trash' ? 'active' : '' }}"><a href="" data-ng-click="showPosts('trash')">Trash <span class="badge">{{ postCategories.trash.length }}</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">   
+            <div class="col-sm-12" style="margin-bottom: 20px;">         
+                <form class="form-inline">             
+                    <div class="form-group" style="margin-right: 30px;">
+                        <label class="control-label" for="order">Sort</label>
+                        <select name="order" data-ng-model="options.orderParam" id="order" class="form-control">
+                            <option value="default">Default (Latest Updated)</option>
+                            <option value="title">Title (A to Z)</option>
+                            <option value="-title">Title (Z to A)</option>
+                            <option value="user.first_name">Author (A to Z)</option>
+                            <option value="-user.first_name">Author (Z to A)</option>
+                            <option value="category">Category (A to Z)</option>
+                            <option value="-category">Category (Z to A)</option>                            
+                            <option value="-created_at">Date Created (New to Old)</option>
+                            <option value="created_at">Date Created (Old to New)</option>
+                            <option value="-updated_at">Date Updated (New to Old)</option>
+                            <option value="updated_at">Date Updated (Old to New)</option>
+                        </select> 
+                    </div>    
+                    <div class="form-group" style="margin-right: 30px;">
+                        <label class="control-label" for="filter">Filter</label>
+                        <input type="search" data-ng-model="query.title" id="filter" placeholder="Post Title" class="form-control" />   
+                    </div>     
+                    <div class="form-group">
+                        <label class="control-label" for="items-per-page">Items Per Page</label>
+                        <select name="items-per-page" data-ng-model="pageSize" id="items-per-page" class="form-control">
+                            <option value="0">All</option>
+                            <option value="5">5</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>    
+                    </div>                                                   
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12" style="margin-bottom: 20px">
+                <div class="alert alert-info animate" role="alert" data-ng-class="(formFields.hasMessage && selected.length) ? 'visible' : ''">
+                    {{ formFields.message }} 
+                    <span data-ng-show="optionLinks()">
+                        &raquo; Options: 
+                        <span data-ng-show="options.activeTab == 'all'">
+                            <a href="" class="text-danger" data-ng-click="publish()">Publish</a> |
+                            <a href="" class="text-danger" data-ng-click="draft()">Draft</a> |
+                            <a href="" class="text-danger" data-ng-click="trash(null)">Trash</a>
+                        </span>
+                        <span data-ng-show="options.activeTab == 'published'">
+                            <a href="" class="text-danger" data-ng-click="draft()">Draft</a> |
+                            <a href="" class="text-danger" data-ng-click="trash(null)">Trash</a>
+                        </span> 
+                        <span data-ng-show="options.activeTab == 'drafts'">
+                            <a href="" class="text-danger" data-ng-click="publish()">Publish</a> |
+                            <a href="" class="text-danger" data-ng-click="trash(null)">Trash</a>
+                        </span>   
+                        <span data-ng-show="options.activeTab == 'trash'">
+                            <a href="" class="text-danger" data-ng-click="restore(null)">Restore</a> |
+                            <a href="" class="text-danger" data-ng-click="destroy(null)"><i class="fa fa-warning"></i> Destroy</a>
+                        </span>                                                        
+                    </span>
+                </div>      
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><input type='checkbox' data-ng-change="checkAllChange(formFields.checkall)" data-ng-disabled="pageSize != 0 && pagesize != posts.length" data-ng-model="formFields.checkall"></th>
+                                <th>Title <a href="" data-ng-click="options.orderParam = 'title'"><i class="fa fa-angle-down"></i></a> <a href="" data-ng-click="options.orderParam = '-title'"><i class="fa fa-angle-up"></i></a></th>
+                                <th data-ng-repeat="locale in options.locales"><i class="fa fa-language"></i> {{ locale.locale.toUpperCase() }}</th>
+                                <th>Categories <a href="" data-ng-click="options.orderParam = 'category'"><i class="fa fa-angle-down"></i></a> <a href="" data-ng-click="options.orderParam = '-category'"><i class="fa fa-angle-up"></i></a></th>
+                                <th>Author <a href="" data-ng-click="options.orderParam = 'user.first_name'"><i class="fa fa-angle-down"></i></a> <a href="" data-ng-click="options.orderParam = '-user.first_name'"><i class="fa fa-angle-up"></i></a></th>
+                                <th>Date Created <a href="" data-ng-click="options.orderParam = 'created_at'"><i class="fa fa-angle-down"></i></a> <a href="" data-ng-click="options.orderParam = '-created_at'"><i class="fa fa-angle-up"></i></a></th>
+                                <th>Date Updated <a href="" data-ng-click="options.orderParam = 'updated_at'"><i class="fa fa-angle-down"></i></a> <a href="" data-ng-click="options.orderParam = '-updated_at'"><i class="fa fa-angle-up"></i></a></th>
+                                <th colspan="3">Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="post in posts | itemsPerPage: pageSize | filter:query | orderBy:options.orderParam:reverse" class="post-row hover-row" data-ng-mouseenter="hover = true" data-ng-mouseleave="hover = false">
+                                <td><input type="checkbox" data-ng-model='post.selected' data-ng-change="checkboxChange(post.id, post.selected)" class="post-checkbox"></td>
+                                <td data-ng-if="! post.is_deleted">
+                                    <span data-ng-if="post.is_online"><a data-ui-sref="edit({ id:post.id })">{{ post.title }}</a></span>
+                                    <span data-ng-if="! post.is_online"><a data-ui-sref="edit({ id:post.id })">{{ post.title }}</a><strong> - Draft </strong></span> 
+                                    <div data-ng-class="{ visibility: ! hover }" class="more-options">
+                                        <i class="fa fa-link"></i> {{ post.slug }}
+                                    </div>
+                                </td>
+                                <td data-ng-if="post.is_deleted">
+                                    {{ post.title }}
+                                    <div data-ng-class="{ visibility: ! hover }" class="more-options">
+                                        <i class="fa fa-link"></i> {{ post.slug }}
+                                    </div>                                
+                                </td>
+                                <td data-ng-repeat="locale in options.locales" data-ng-init="translationExists = post.translations.indexOf(locale.locale) > -1 ? true : false">
+                                    <i class="fa" data-ng-class="translationExists ? 'fa-check-circle text-success' : 'fa-times-circle text-danger'"></i>
+                                </td>                                
+                                <td>{{ post.category }}</td>
+                                <td>{{ post.user.first_name + ' ' + post.user.last_name }}</td>
+                                <td><abbr title="{{ post.created_at | dateToISO | date:'niftyLongDate' }}">{{ post.created_at | dateToISO | date:'niftyShortDate' }}</abbr></td>
+                                <td><abbr title="{{ post.updated_at | dateToISO | date:'niftyLongDate' }}">{{ post.updated_at | dateToISO | date:'niftyShortDate' }}</abbr></td>
+                                <td>
+                                    <span data-ng-if="post.is_deleted"><a class="btn btn-metis-2 btn-sm" href="" data-ng-click="restore(post.id)" title="Restore"><i class="fa fa-recycle"></i></a></span>
+                                    <span data-ng-if="! post.is_deleted"><a class="btn btn-metis-5 btn-sm" data-ui-sref="edit({ id:post.id })" title="Edit"><i class="fa fa-pencil"></i></a></span>
+                                </td>
+                                <td>
+                                    <span data-ng-if="post.is_deleted"><i class="fa fa-warning text-danger"></i> <a class="btn btn-metis-1 btn-sm" href="" data-ng-click="destroy(post.id)" title="Destroy"><i class="fa fa-trash"></i></a></span>
+                                    <span data-ng-if="! post.is_deleted"><a class="btn btn-metis-6 btn-sm" data-ng-click="preview(post.id)" href="" title="Preview"><i class="fa fa-eye"></i></a></span> 
+                                </td>                            
+                                <td>                 
+                                    <span data-ng-if="! post.is_deleted"><a class="btn btn-metis-3 btn-sm" href="" data-ng-click="trash(post.id)" title="Trash"><i class="fa fa-trash"></i></a></span>
+                                    <span data-ng-if="post.is_deleted">&nbsp;</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <dir-pagination-controls template-url="../packages/kjamesy/cms/angular-modules/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

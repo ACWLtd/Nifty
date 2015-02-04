@@ -1,0 +1,64 @@
+            <form data-ng-submit="updateUser(userEdit)" name="editForm">
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-sm-4">
+                        <form-group class="{{ userEdit.first_name.error ? 'has-error' : '' }}">
+                            <label for="edit_first_name" class="control-label">First Name *</label>
+                            <input type="text" class="form-control" id="edit_first_name" data-ng-model="userEdit.first_name" placeholder="First Name" data-ng-disabled="! options.editingUser" />              
+                        </form-group>
+                    </div>
+                    <div class="col-sm-4">
+                        <form-group class="{{ userEdit.last_name.error ? 'has-error' : '' }}">
+                            <label for="edit_last_name" class="control-label">Last Name *</label>
+                            <input type="text" class="form-control" id="edit_last_name" data-ng-model="userEdit.last_name" placeholder="Last Name" data-ng-disabled="! options.editingUser" />              
+                        </form-group>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-sm-4">
+                        <form-group class="{{ userEdit.email.error ? 'has-error' : '' }}">
+                            <label for="edit_email" class="control-label">Email *</label>
+                            <input type="text" class="form-control" id="edit_email" data-ng-model="userEdit.email" placeholder="Email" data-ng-disabled="! options.editingUser" />              
+                        </form-group>
+                    </div>
+                    <div class="col-sm-4">
+                        <form-group class="{{ userEdit.username.error ? 'has-error' : '' }}">
+                            <label for="edit_username" class="control-label">Username</label>
+                            <input type="text" class="form-control" id="edit_username" data-ng-model="userEdit.username" placeholder="Username" data-ng-disabled="! options.editingUser" />              
+                        </form-group>
+                    </div>                    
+                </div>  
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-sm-4">
+                        <form-group class="{{ userEdit.password.error ? 'has-error' : '' }}">
+                            <label for="edit_password" class="control-label">Password</label>
+                            <input type="password" class="form-control" id="edit_password" data-ng-model="userEdit.password" placeholder="Password" data-ng-disabled="! options.editingUser" />              
+                        </form-group>
+                    </div>
+                    <div class="col-sm-4">
+                        <form-group class="{{ userEdit.password.error ? 'has-error' : '' }}">
+                            <label for="edit_password_confirmation" class="control-label">Password Confirmation</label>
+                            <input type="password" class="form-control" id="edit_password_confirmation" data-ng-model="userEdit.password_confirmation" placeholder="Password Confirmation" data-ng-disabled="! options.editingUser" />  
+                        </form-group>
+                    </div>
+                </div>                   
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-sm-4">
+                        <form-group>
+                            <label for="edit_groups" class="control-label">Role</label>
+                            <select class="form-control" id="edit_groups" data-ng-model="selects.groups" data-ng-options="option as option.name for option in options.groups" data-ng-disabled="! options.editingUser"></select>                            
+                        </form-group>
+                    </div>
+                    <div class="col-sm-4">
+                        <form-group class="pull-left">
+                            <span class="btn btn-metis-3 btn-lg btn-rect" data-ng-disabled="options.updatingUser" data-ng-click="cancelEdit()">
+                                <i class="fa fa-times"></i> Cancel
+                            </span>        
+                        </form-group>                    
+                        <form-group class="pull-right">
+                            <button class="btn btn-metis-5 btn-lg btn-rect" type="submit" data-ng-disabled="options.updatingUser">
+                                <i class="fa fa-floppy-o"></i> Save
+                            </button>             
+                        </form-group>
+                    </div>
+                </div>                             
+            </form> 
