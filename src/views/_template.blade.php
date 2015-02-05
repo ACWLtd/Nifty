@@ -47,7 +47,7 @@
                     <div class="topnav">
                         <div class="btn-toolbar">
                             <div class="btn-group">
-                                <a href="{{ URL::route('logout') }}" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom" class="btn btn-danger btn-sm btn-grad">
+                                <a href="{{ URL::route('logout') }}" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom" class="btn btn-danger btn-sm btn-rect">
                                     <i class="fa fa-power-off"></i>
                                 </a>
                             </div>
