@@ -6,7 +6,7 @@ A nifty little CMS written in Laravel 4.2 and AngularJS - intended for use in ow
 ## Steps to Follow
 Install a fresh copy of Laravel 4.2.* and configure database and mail settings.
 
-Add the following to the composer.json file, before the 'require' section
+Add the following to the composer.json file
 
 ```shell
 "repositories": [   
@@ -21,11 +21,17 @@ Add the following to the composer.json file, before the 'require' section
 ],	
 ```  
 
-Add the following to the composer.json file, inside 'require'
+Add the following to the composer.json file, inside ```require```
 
 ```shell
 "kjamesy/cms": "dev-master",
 "kjamesy/utility": "dev-master" 
+``` 
+
+Change ```minimum-stability``` inside composer.json file to ```dev``` and add the following:
+
+```shell
+"prefer-stable" : true
 ``` 
 
 Run ``` composer update ```
