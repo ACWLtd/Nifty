@@ -55,6 +55,16 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="{{ $activeParent=='events' ? 'active' : '' }}">
+                        <a href="javascript:;"><i class="fa fa-calendar"></i>&nbsp;Events <span class="fa arrow"></span> </a>
+                        <ul>
+                            <li class="{{ $active=='allevents' ? 'active' : '' }}">
+                                <a href="{{ URL::route('events.landing') }}">
+                                    <i class="fa fa-angle-right"></i>&nbsp;All Events
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="{{ $activeParent=='users' ? 'active' : '' }}">
                         <a href="javascript:;"><i class="fa fa-user"></i>&nbsp;Users <span class="fa arrow"></span> </a>
                         <ul>

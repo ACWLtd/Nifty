@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class CmsLocale extends Eloquent
+class Locale extends Eloquent
 {
     protected $table = 'cms_locales';
 

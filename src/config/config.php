@@ -34,6 +34,10 @@ return [
             'route' => 'admin/locales'
         ],
 
+        'events'     => [
+            'route' => 'admin/events'
+        ],
+
         'users'     => [
             'route' => 'admin/users'
         ],

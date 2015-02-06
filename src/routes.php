@@ -27,6 +27,11 @@ if (is_array($routesConfig['locales']))
 else
     $locales = $routesConfig['locales'];
 
+if (is_array($routesConfig['events']))
+    $events = $routesConfig['events']['route'];
+else
+    $events = $routesConfig['events'];
+
 if (is_array($routesConfig['users']))
     $users = $routesConfig['users']['route'];
 else
@@ -36,7 +41,7 @@ Route::get('login', ['as' => 'login', 'uses' => 'Kjamesy\Cms\Controllers\AuthCon
 
 Route::post('login', ['as' => 'do-login', 'before' => 'cms/csrf', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@do_login']);
 
-Route::group(['before' => 'Sentinel\auth'], function() use($routesConfig, $pages, $posts, $locales, $users) {
+Route::group(['before' => 'Sentinel\auth'], function() use($routesConfig, $pages, $posts, $locales, $events, $users) {
 
     Route::get('admin', ['as' => 'admin', function() use($routesConfig) {
 //        var_dump($routesConfig);
@@ -70,13 +75,17 @@ Route::group(['before' => 'Sentinel\auth'], function() use($routesConfig, $pages
     Route::get($locales, ['as' => 'locales.landing', 'uses' => 'Kjamesy\Cms\Controllers\LocaleController@index']);
     Route::resource($locales . '/locale-resource', 'Kjamesy\Cms\Controllers\LocaleResourceController');
 
+    /*****************EVENTS*******************/
+    Route::get($events, ['as' => 'events.landing', 'uses' => 'Kjamesy\Cms\Controllers\EventController@index']);
+    Route::resource($events . '/event-resource', 'Kjamesy\Cms\Controllers\EventResourceController');
+
     /**********************USERS************************/
     Route::get($users, ['as' => 'users.landing', 'uses' => 'Kjamesy\Cms\Controllers\UserController@index']);
     Route::resource($users . '/users-resource', 'Kjamesy\Cms\Controllers\UserResourceController');
     Route::get($users . '/profile', ['as' => 'users.profile', 'uses' => 'Kjamesy\Cms\Controllers\UserController@get_profile']);
     Route::get($users . '/profile/password', ['as' => 'users.profile.password', 'uses' => 'Kjamesy\Cms\Controllers\UserController@get_profile_password']);
 
-    Route::group(['before' => 'cms/csrf'], function() use($pages, $posts, $locales, $users) {
+    Route::group(['before' => 'cms/csrf'], function() use($pages, $posts, $locales, $events, $users) {
 
         /*****************PAGES*******************/
         Route::post($pages . '/{action}/bulk-actions', ['as' => 'pages.bulk-actions', 'uses' => 'Kjamesy\Cms\Controllers\PageController@do_bulk_actions']);
@@ -104,6 +113,9 @@ Route::group(['before' => 'Sentinel\auth'], function() use($routesConfig, $pages
 
         /*****************LOCALES*******************/
         Route::post($locales . '/destroy', ['as' => 'locales.destroy', 'uses' => 'Kjamesy\Cms\Controllers\LocaleController@destroy']);
+
+        /*****************PAGES*******************/
+        Route::post($events . '/{action}/bulk-actions', ['as' => 'events.bulk-actions', 'uses' => 'Kjamesy\Cms\Controllers\EventController@do_bulk_actions']);
 
         /**********************USERS************************/
         Route::post($users . '/profile/update', ['as' => 'users.profile.update', 'uses' => 'Kjamesy\Cms\Controllers\UserController@update_profile']);

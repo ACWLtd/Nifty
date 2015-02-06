@@ -5,15 +5,15 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Kjamesy\Cms\Helpers\Miscellaneous;
-use Kjamesy\Cms\Models\CmsLocale;
+use Kjamesy\Cms\Models\Locale;
 
 class LocaleResourceController extends \BaseController {
     public function __construct(){
-        $this->rules = CmsLocale::$rules;
+        $this->rules = Locale::$rules;
     }
 
     public function index(){
-        $locales = CmsLocale::getLocaleResource();
+        $locales = Locale::getLocaleResource();
 
         return Response::json(compact('locales', 'locales'));
     }
@@ -32,7 +32,7 @@ class LocaleResourceController extends \BaseController {
             return Response::json(['validation' => $validation]);
         else
         {
-            $locale = new CmsLocale;
+            $locale = new Locale;
             $locale->locale = $inputs['locale'];
             $locale->save();
 
@@ -56,7 +56,7 @@ class LocaleResourceController extends \BaseController {
             return Response::json(['validation' => $validation]);
         else
         {
-            $locale = CmsLocale::find($id);
+            $locale = Locale::find($id);
             $locale->locale = $inputs['locale'];
             $locale->save();
 

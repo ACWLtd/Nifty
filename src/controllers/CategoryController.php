@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\View;
 use Kjamesy\Cms\Helpers\Miscellaneous;
 use Kjamesy\Cms\Models\Category;
 use Kjamesy\Cms\Models\CategoryTranslation;
-use Kjamesy\Cms\Models\CmsLocale;
+use Kjamesy\Cms\Models\Locale;
 use Kjamesy\Cms\Models\User;
 use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
@@ -41,7 +41,7 @@ class CategoryController extends \BaseController
     }
 
     public function get_locale($localeId) {
-        $locale = CmsLocale::getSingleLocaleResource($localeId);
+        $locale = Locale::getSingleLocaleResource($localeId);
 
         if ( $locale )
             return Response::json(['locale' => $locale]);

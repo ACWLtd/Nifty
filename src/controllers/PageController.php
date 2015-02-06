@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Kjamesy\Cms\Helpers\Miscellaneous;
-use Kjamesy\Cms\Models\CmsLocale;
-use Kjamesy\Cms\Models\CmsMeta;
+use Kjamesy\Cms\Models\Locale;
+use Kjamesy\Cms\Models\Meta;
 use Kjamesy\Cms\Models\Page;
 use Kjamesy\Cms\Models\PageTranslation;
 use Kjamesy\Cms\Models\User;
@@ -24,7 +24,7 @@ class PageController extends \BaseController
         $this->logged_in_for = $this->user->last_login->diffForHumans();
         $this->activeParent = 'pages';
         $this->translationRules = PageTranslation::$rules;
-        $this->customFieldRules = CmsMeta::$rules;
+        $this->customFieldRules = Meta::$rules;
     }
 
     public function index()
@@ -59,7 +59,7 @@ class PageController extends \BaseController
     }
 
     public function get_locale($localeId) {
-        $locale = CmsLocale::getSingleLocaleResource($localeId);
+        $locale = Locale::getSingleLocaleResource($localeId);
 
         if ( $locale )
             return Response::json(['locale' => $locale]);
@@ -112,7 +112,7 @@ class PageController extends \BaseController
 
     public function get_translation($pageId, $localeId) {
         $translation = PageTranslation::findATranslation($pageId, $localeId);
-        $metaKeys = CmsMeta::getPageTranslationMetaKeysOptionsList($translation->id);
+        $metaKeys = Meta::getPageTranslationMetaKeysOptionsList($translation->id);
 
         if ( $translation )
             return Response::json(['translation' => $translation, 'metaKeys' => $metaKeys]);
@@ -164,7 +164,7 @@ class PageController extends \BaseController
 
                 $cFieldIds[] = $cField['id'];
 
-                $meta = CmsMeta::wherePageTranslationId($id)->find($cField['id']);
+                $meta = Meta::wherePageTranslationId($id)->find($cField['id']);
                 if ( $meta ) {
                     $meta->meta_value = $cField['meta_value'];
                     $meta->save();
@@ -172,9 +172,9 @@ class PageController extends \BaseController
             }
 
             if ( count($cFieldIds) )
-                CmsMeta::wherePageTranslationId($id)->whereNotIn('id', $cFieldIds)->delete();
+                Meta::wherePageTranslationId($id)->whereNotIn('id', $cFieldIds)->delete();
             else
-                CmsMeta::wherePageTranslationId($id)->delete();
+                Meta::wherePageTranslationId($id)->delete();
 
             Cache::flush();
             return Response::json(['success' => 'Translation successfully updated', 'slug' => $slug]);
@@ -203,10 +203,10 @@ class PageController extends \BaseController
         else {
             $pageId = Input::get('pageId');
 
-            $existingKeys = CmsMeta::listPageMetaKeys($type, $pageId);
+            $existingKeys = Meta::listPageMetaKeys($type, $pageId);
             $metaKey = Utility::makeUniqueSlug($existingKeys, Str::slug($inputs['meta_key']));
 
-            $customField = new CmsMeta;
+            $customField = new Meta;
             if ( $type == 'page' )
                 $customField->page_id = $pageId;
             elseif ( $type == 'translation' )
@@ -233,9 +233,9 @@ class PageController extends \BaseController
             return Response::json(['validation' => $validation]);
         else {
             $pageId = Input::get('pageId');
-            $customField = CmsMeta::find($inputs['id']);
+            $customField = Meta::find($inputs['id']);
 
-            $existingKeys = CmsMeta::listPageMetaKeys($type, $pageId);
+            $existingKeys = Meta::listPageMetaKeys($type, $pageId);
             $metaKey = $customField->meta_key;
 
             if ( Str::slug($inputs['meta_key']) != $customField->meta_key ) {
@@ -257,9 +257,9 @@ class PageController extends \BaseController
 
         if ( $customFieldId ) {
             if ( $type == 'page' )
-                $meta = CmsMeta::wherePageId($pageId)->whereId($customFieldId);
+                $meta = Meta::wherePageId($pageId)->whereId($customFieldId);
             elseif ( $type == 'translation' )
-                $meta = CmsMeta::wherePageTranslationId($pageId)->whereId($customFieldId);
+                $meta = Meta::wherePageTranslationId($pageId)->whereId($customFieldId);
 
             if ( $meta ) {
                 $meta->delete();

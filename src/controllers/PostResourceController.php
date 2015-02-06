@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Kjamesy\Cms\Helpers\Miscellaneous;
 use Kjamesy\Cms\Models\Category;
-use Kjamesy\Cms\Models\CmsLocale;
-use Kjamesy\Cms\Models\CmsMeta;
+use Kjamesy\Cms\Models\Locale;
+use Kjamesy\Cms\Models\Meta;
 use Kjamesy\Cms\Models\Post;
 use Kjamesy\Cms\Models\PostTranslation;
 use Kjamesy\Utility\Facades\Utility;
@@ -24,7 +24,7 @@ class PostResourceController extends \BaseController {
     public function index()
     {
         $posts = Post::getPostResource();
-        $locales = CmsLocale::getLocaleResource();
+        $locales = Locale::getLocaleResource();
         return Response::json(compact('posts', 'locales'));
     }
 
@@ -82,8 +82,8 @@ class PostResourceController extends \BaseController {
     {
         $post = Post::getSinglePostResource($id);
         $categories = Category::getCategoryList();
-        $locales = CmsLocale::getLocaleResource();
-        $metaKeys = CmsMeta::getPostMetaKeysOptionsList($post->id);
+        $locales = Locale::getLocaleResource();
+        $metaKeys = Meta::getPostMetaKeysOptionsList($post->id);
 
         return Response::json(compact('post', 'categories', 'locales', 'metaKeys'));
     }
@@ -150,7 +150,7 @@ class PostResourceController extends \BaseController {
 
                 $cFieldIds[] = $cField['id'];
 
-                $meta = CmsMeta::wherePostId($id)->find($cField['id']);
+                $meta = Meta::wherePostId($id)->find($cField['id']);
                 if ( $meta ) {
                     $meta->meta_value = $cField['meta_value'];
                     $meta->save();
@@ -158,9 +158,9 @@ class PostResourceController extends \BaseController {
             }
 
             if ( count($cFieldIds) )
-                CmsMeta::wherePostId($id)->whereNotIn('id', $cFieldIds)->delete();
+                Meta::wherePostId($id)->whereNotIn('id', $cFieldIds)->delete();
             else
-                CmsMeta::wherePostId($id)->delete();
+                Meta::wherePostId($id)->delete();
 
             Cache::flush();
 

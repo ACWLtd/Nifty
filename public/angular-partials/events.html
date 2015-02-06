@@ -1,0 +1,196 @@
+<div class="col-lg-12">
+    <div class="box info">
+        <header>
+            <div class="icons">
+                <i class="fa fa-flag-o"></i>
+            </div>
+            <h5>Events</h5>
+            <div class="toolbar">
+                <a class="btn btn-metis-1 btn-sm btn-rect" data-ui-sref="create"><span class="fa fa-pencil"></span> New Event</a>
+            </div>
+        </header>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="pages-row" data-ng-cloak=""> <!-- data-ng-show="pages[0]" -->
+        <div class="row">
+            <div class="col-sm-12" style="margin-bottom: 20px;">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="{{ options.activeTab == 'all' ? 'active' : '' }}">
+                        <a href="" data-ng-click="showEvents('all')">Upcoming Events <span class="badge">{{ eventCategories.all.length }}</span></a>
+                    </li>
+                    <li role="presentation" class="{{ options.activeTab == 'approved' ? 'active' : '' }}">
+                        <a href="" data-ng-click="showEvents('approved')">Approved <span class="badge">{{ eventCategories.approved.length }}</span></a>
+                    </li>
+                    <li role="presentation" class="{{ options.activeTab == 'pending' ? 'active' : '' }}">
+                        <a href="" data-ng-click="showEvents('pending')">Pending Approval <span class="badge">{{ eventCategories.pending.length }}</span></a>
+                    </li>
+                    <li role="presentation" class="{{ options.activeTab == 'past' ? 'active' : '' }}">
+                        <a href="" data-ng-click="showEvents('past')">Past Events <span class="badge">{{ eventCategories.past.length }}</span></a>
+                    </li>                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">   
+            <div class="col-sm-12" style="margin-bottom: 20px;">         
+                <form class="form-inline">             
+                    <div class="form-group" style="margin-right: 30px;">
+                        <label class="control-label" for="order">Sort</label>
+                        <select name="order" data-ng-model="options.orderParam" id="order" class="form-control">
+                            <option value="default">Default (Closest Start Date)</option>
+                            <option value="title">Title (A to Z)</option>
+                            <option value="-title">Title (Z to A)</option>
+                            <option value="organisation">Organisation (A to Z)</option>
+                            <option value="-organisation">Organisation (Z to A)</option>
+                            <option value="type">Event Type (A to Z)</option>
+                            <option value="-type">Event Type (Z to A)</option>                            
+                            <option value="start_date">Start Date {{ options.activeTab == 'past' ? '(Farthest to Closest)' : '(Closest to Farthest)' }}</option>
+                            <option value="-start_date">Start Date {{ options.activeTab == 'past' ? '(Closest to Farthest)' : '(Farthest to Closest)' }}</option>                            
+                            <option value="-created_at">Date Created (New to Old)</option>
+                            <option value="created_at">Date Created (Old to New)</option>
+                        </select> 
+                    </div>    
+                    <div class="form-group" style="margin-right: 30px;">
+                        <label class="control-label" for="filter">Filter</label>
+                        <input type="search" data-ng-model="query.title" id="filter" placeholder="Event Title" class="form-control" />   
+                    </div>    
+                    <div class="form-group" style="margin-right: 30px;">
+                        <label class="control-label" for="filter">Filter</label>
+                        <input type="search" data-ng-model="query.type" id="filter" placeholder="Event Type" class="form-control" />   
+                    </div>                      
+                    <div class="form-group">
+                        <label class="control-label" for="items-per-page">Items Per Page</label>
+                        <select name="items-per-page" data-ng-model="pageSize" id="items-per-page" class="form-control">
+                            <option value="0">All</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>    
+                    </div>                                                   
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12" style="margin-bottom: 20px">
+                <div class="alert alert-info animate" role="alert" data-ng-class="(formFields.hasMessage && selected.length) ? 'visible' : ''">
+                    {{ formFields.message }} 
+                    <span data-ng-show="optionLinks()">
+                        &raquo; Options: 
+                        <span data-ng-show="options.activeTab == 'all'">
+                            <a href="" class="text-danger" data-ng-click="approve()">Approve</a> |
+                            <a href="" class="text-danger" data-ng-click="unApprove()">Unapprove</a> |
+                            <a href="" class="text-danger" data-ng-click="destroy(null)">Destroy</a>
+                        </span>
+                        <span data-ng-show="options.activeTab == 'approved'">
+                            <a href="" class="text-danger" data-ng-click="unApprove()">Unapprove</a> |
+                            <a href="" class="text-danger" data-ng-click="destroy(null)">Destroy</a>
+                        </span> 
+                        <span data-ng-show="options.activeTab == 'pending'">
+                            <a href="" class="text-danger" data-ng-click="approve()">Approve</a> |
+                            <a href="" class="text-danger" data-ng-click="destroy(null)">Destroy</a>
+                        </span>   
+                        <span data-ng-show="options.activeTab == 'past'">
+                            <a href="" class="text-danger" data-ng-click="destroy(null)">Destroy</a>
+                        </span>                                                        
+                    </span>
+                </div>      
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type='checkbox' data-ng-change="checkAllChange(formFields.checkall)" data-ng-disabled="pageSize != 0 && pagesize != pages.length" data-ng-model="formFields.checkall">
+                                </th>
+                                <th>
+                                    Title 
+                                    <a href="" data-ng-click="options.orderParam = 'title'"><i class="fa fa-angle-down"></i></a> 
+                                    <a href="" data-ng-click="options.orderParam = '-title'"><i class="fa fa-angle-up"></i></a>
+                                </th>
+                                <th>
+                                    User
+                                </th>
+                                <th>
+                                    Organisation 
+                                    <a href="" data-ng-click="options.orderParam = 'organisation'"><i class="fa fa-angle-down"></i></a> 
+                                    <a href="" data-ng-click="options.orderParam = '-organisation'"><i class="fa fa-angle-up"></i></a>
+                                </th>
+                                <th>
+                                    Event Type 
+                                    <a href="" data-ng-click="options.orderParam = 'type'"><i class="fa fa-angle-down"></i></a> 
+                                    <a href="" data-ng-click="options.orderParam = '-type'"><i class="fa fa-angle-up"></i></a>
+                                </th>  
+                                <th>
+                                    Venue
+                                </th>   
+                                <th>
+                                    Start Date 
+                                    <a href="" data-ng-click="options.orderParam = 'start_date'"><i class="fa fa-angle-down"></i></a> 
+                                    <a href="" data-ng-click="options.orderParam = '-start_date'"><i class="fa fa-angle-up"></i></a>
+                                </th>     
+                                <th>
+                                    End Date
+                                </th>                                                                                                                        
+                                <th>    
+                                    Date Created 
+                                    <a href="" data-ng-click="options.orderParam = 'created_at'"><i class="fa fa-angle-down"></i></a> 
+                                    <a href="" data-ng-click="options.orderParam = '-created_at'"><i class="fa fa-angle-up"></i></a>
+                                </th>
+                                <th colspan="2">
+                                    Options
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="anEvent in events | itemsPerPage: pageSize | filter:query | orderBy:options.orderParam:reverse" class="hover-row" data-ng-mouseenter="hover = true" data-ng-mouseleave="hover = false">
+                                <td>
+                                    <input type="checkbox" data-ng-model='anEvent.selected' data-ng-change="checkboxChange(anEvent.id, anEvent.selected)" class="anEvent-checkbox">
+                                </td>
+                                <td>
+                                    <span data-ng-if="! anEvent.is_approved"><a data-ui-sref="edit({ id:anEvent.id })">{{ anEvent.title }}</a><strong> - Pending </strong></span> 
+                                    <span data-ng-if="anEvent.is_approved"><a data-ui-sref="edit({ id:anEvent.id })">{{ anEvent.title }}</a></span> 
+                                    <div data-ng-class="{ visibility: ! hover }" class="more-options">
+                                        <i class="fa fa-envelope-o"></i> {{ anEvent.email }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="mailto:{{ anEvent.email }}" title="{{ anEvent.email }}">{{ anEvent.first_name + ' ' + anEvent.last_name }}</a>                          
+                                </td>
+                                <td>
+                                    {{ anEvent.organisation }}
+                                </td>
+                                <td>
+                                    {{ anEvent.type }}
+                                </td>
+                                <td>
+                                    {{ anEvent.venue }}
+                                </td>                                
+                                <td> 
+                                    <abbr title="{{ anEvent.start_date | date:'niftyLongDate' }}">{{ anEvent.start_date | date:'niftyShortDate' }}</abbr>
+                                </td>
+                                <td> 
+                                    <abbr title="{{ anEvent.end_date | date:'niftyLongDate' }}">{{ anEvent.end_date | date:'niftyShortDate' }}</abbr>
+                                </td>                                
+                                <td>
+                                    <abbr title="{{ anEvent.created_at | dateToISO | date:'niftyLongDate' }}">{{ anEvent.created_at | dateToISO | date:'niftyShortDate' }}</abbr>
+                                </td>
+                                <td>
+                                    <a class="btn btn-metis-5 btn-sm" data-ui-sref="edit({ id:anEvent.id })" title="Edit"><i class="fa fa-pencil"></i></a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-metis-1 btn-sm" href="" data-ng-click="destroy(anEvent.id)" title="Destroy"><i class="fa fa-trash"></i></a> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <dir-pagination-controls template-url="../packages/kjamesy/cms/angular-modules/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

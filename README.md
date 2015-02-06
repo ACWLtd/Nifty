@@ -2,6 +2,12 @@
 
 A nifty little CMS written in Laravel 4.2 and AngularJS - intended for use in own projects
 
+## Upgrading from v0.3.0? 
+Run this to install the new database table:
+
+```shell
+php artisan migrate --package=kjamesy/cms
+```
 
 ## Steps to Follow
 Install a fresh copy of Laravel 4.2.* and configure database and mail settings.

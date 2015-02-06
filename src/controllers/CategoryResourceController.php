@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Kjamesy\Cms\Helpers\Miscellaneous;
 use Kjamesy\Cms\Models\Category;
-use Kjamesy\Cms\Models\CmsLocale;
+use Kjamesy\Cms\Models\Locale;
 
 class CategoryResourceController extends \BaseController {
     public function __construct(){
@@ -14,7 +14,7 @@ class CategoryResourceController extends \BaseController {
 
     public function index(){
         $categories = Category::getCategoryResource();
-        $locales = CmsLocale::getLocaleResource();
+        $locales = Locale::getLocaleResource();
 
         return Response::json(compact('categories', 'locales'));
     }

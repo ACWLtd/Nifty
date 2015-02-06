@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class CmsMeta extends Eloquent
+class Meta extends Eloquent
 {
     protected $table = 'cms_pages_posts_meta';
 

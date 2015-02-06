@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Kjamesy\Cms\Helpers\Miscellaneous;
 use Kjamesy\Cms\Models\Category;
-use Kjamesy\Cms\Models\CmsLocale;
-use Kjamesy\Cms\Models\CmsMeta;
+use Kjamesy\Cms\Models\Locale;
+use Kjamesy\Cms\Models\Meta;
 use Kjamesy\Cms\Models\Post;
 use Kjamesy\Cms\Models\PostTranslation;
 use Kjamesy\Cms\Models\User;
@@ -24,7 +24,7 @@ class PostController extends \BaseController
         $this->logged_in_for = $this->user->last_login->diffForHumans();
         $this->translationRules = PostTranslation::$rules;
         $this->activeParent = 'posts';
-        $this->customFieldRules = CmsMeta::$rules;
+        $this->customFieldRules = Meta::$rules;
     }
 
     public function index(){
@@ -59,7 +59,7 @@ class PostController extends \BaseController
     }
 
     public function get_locale($localeId) {
-        $locale = CmsLocale::getSingleLocaleResource($localeId);
+        $locale = Locale::getSingleLocaleResource($localeId);
 
         if ( $locale )
             return Response::json(['locale' => $locale]);
@@ -113,7 +113,7 @@ class PostController extends \BaseController
 
     public function get_translation($postId, $localeId) {
         $translation = PostTranslation::findATranslation($postId, $localeId);
-        $metaKeys = CmsMeta::getPostTranslationMetaKeysOptionsList($translation->id);
+        $metaKeys = Meta::getPostTranslationMetaKeysOptionsList($translation->id);
 
         if ( $translation )
             return Response::json(['translation' => $translation, 'metaKeys' => $metaKeys]);
@@ -165,7 +165,7 @@ class PostController extends \BaseController
 
                 $cFieldIds[] = $cField['id'];
 
-                $meta = CmsMeta::wherePostTranslationId($id)->find($cField['id']);
+                $meta = Meta::wherePostTranslationId($id)->find($cField['id']);
                 if ( $meta ) {
                     $meta->meta_value = $cField['meta_value'];
                     $meta->save();
@@ -173,9 +173,9 @@ class PostController extends \BaseController
             }
 
             if ( count($cFieldIds) )
-                CmsMeta::wherePostTranslationId($id)->whereNotIn('id', $cFieldIds)->delete();
+                Meta::wherePostTranslationId($id)->whereNotIn('id', $cFieldIds)->delete();
             else
-                CmsMeta::wherePostTranslationId($id)->delete();
+                Meta::wherePostTranslationId($id)->delete();
 
             Cache::flush();
             return Response::json(['success' => 'Translation successfully updated', 'slug' => $slug]);
@@ -204,10 +204,10 @@ class PostController extends \BaseController
         else {
             $postId = Input::get('postId');
 
-            $existingKeys = CmsMeta::listPostMetaKeys($type, $postId);
+            $existingKeys = Meta::listPostMetaKeys($type, $postId);
             $metaKey = Utility::makeUniqueSlug($existingKeys, Str::slug($inputs['meta_key']));
 
-            $customField = new CmsMeta;
+            $customField = new Meta;
             if ( $type == 'post' )
                 $customField->post_id = $postId;
             elseif ( $type == 'translation' )
@@ -234,9 +234,9 @@ class PostController extends \BaseController
             return Response::json(['validation' => $validation]);
         else {
             $postId = Input::get('postId');
-            $customField = CmsMeta::find($inputs['id']);
+            $customField = Meta::find($inputs['id']);
 
-            $existingKeys = CmsMeta::listPostMetaKeys($type, $postId);
+            $existingKeys = Meta::listPostMetaKeys($type, $postId);
             $metaKey = $customField->meta_key;
 
             if ( Str::slug($inputs['meta_key']) != $customField->meta_key ) {
@@ -258,9 +258,9 @@ class PostController extends \BaseController
 
         if ( $customFieldId ) {
             if ( $type == 'post' )
-                $meta = CmsMeta::wherePostId($postId)->whereId($customFieldId);
+                $meta = Meta::wherePostId($postId)->whereId($customFieldId);
             elseif ( $type == 'translation' )
-                $meta = CmsMeta::wherePostTranslationId($postId)->whereId($customFieldId);
+                $meta = Meta::wherePostTranslationId($postId)->whereId($customFieldId);
 
             if ( $meta ) {
                 $meta->delete();

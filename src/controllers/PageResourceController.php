@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Kjamesy\Cms\Helpers\Miscellaneous;
 use kJamesy\Cms\Helpers\PagesHelper;
-use Kjamesy\Cms\Models\CmsLocale;
-use Kjamesy\Cms\Models\CmsMeta;
+use Kjamesy\Cms\Models\Locale;
+use Kjamesy\Cms\Models\Meta;
 use Kjamesy\Cms\Models\Page;
 use Kjamesy\Cms\Models\PageTranslation;
 use Kjamesy\Utility\Facades\Utility;
@@ -28,7 +28,7 @@ class PageResourceController extends \BaseController {
         $backendPages = new PagesHelper($pages);
         $pagesTree = $backendPages->getPagesTree();
 
-        $locales = CmsLocale::getLocaleResource();
+        $locales = Locale::getLocaleResource();
 
         return Response::json(compact('pagesTree', 'locales'));
     }
@@ -90,8 +90,8 @@ class PageResourceController extends \BaseController {
     {
         $page = Page::getSinglePageResource($id);
         $parents = Page::getParentOptions( $page->id );
-        $locales = CmsLocale::getLocaleResource();
-        $metaKeys = CmsMeta::getPageMetaKeysOptionsList($page->id);
+        $locales = Locale::getLocaleResource();
+        $metaKeys = Meta::getPageMetaKeysOptionsList($page->id);
 
         return Response::json(compact('page', 'parents', 'locales', 'metaKeys'));
     }
@@ -165,7 +165,7 @@ class PageResourceController extends \BaseController {
 
                 $cFieldIds[] = $cField['id'];
 
-                $meta = CmsMeta::wherePageId($id)->find($cField['id']);
+                $meta = Meta::wherePageId($id)->find($cField['id']);
                 if ( $meta ) {
                     $meta->meta_value = $cField['meta_value'];
                     $meta->save();
@@ -173,9 +173,9 @@ class PageResourceController extends \BaseController {
             }
 
             if ( count($cFieldIds) )
-                CmsMeta::wherePageId($id)->whereNotIn('id', $cFieldIds)->delete();
+                Meta::wherePageId($id)->whereNotIn('id', $cFieldIds)->delete();
             else
-                CmsMeta::wherePageId($id)->delete();
+                Meta::wherePageId($id)->delete();
 
             Cache::flush();
             return Response::json(['success' => 'Page successfully updated', 'slug' => $slug]);
