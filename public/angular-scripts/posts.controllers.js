@@ -45,7 +45,7 @@ postsAppControllers.controller('PostsController', ['$rootScope', '$scope', '$win
 
 				if ( value.posttranslations.length ) {
 					angular.forEach(value.posttranslations, function(translation, index) {
-						value.translations.push(translation.cmslocale.locale);
+						value.translations.push(translation.locale.locale);
 					});
 				}
 
@@ -375,8 +375,8 @@ postsAppControllers.controller('EditController', ['$scope', '$window', '$statePa
 			});
 
 			angular.forEach(data.post.posttranslations, function(translation, index) {
-				if ( translation.cmslocale ) {
-					$scope.options.translations.push(translation.cmslocale.locale);
+				if ( translation.locale ) {
+					$scope.options.translations.push(translation.locale.locale);
 				}
 			});
 
@@ -724,7 +724,7 @@ postsAppControllers.controller('EditTranslationController', ['$scope', '$window'
 				$scope.edit.content = data.translation.content;
 
 				$scope.selects.is_online = data.translation.is_online ? $scope.options.onlineOptions[1] : $scope.options.onlineOptions[0];
-				$scope.options.locale = data.translation.cmslocale.locale;
+				$scope.options.locale = data.translation.locale.locale;
 				$scope.options.showEditor = true;
 
 				angular.forEach(data.translation.posttranslationmeta, function(meta, index) {

@@ -24,16 +24,16 @@ class PageTranslation extends Eloquent
         return $this->belongsTo('Kjamesy\Cms\Models\Page', 'page_id');
     }
 
-    public function cmslocale(){
-        return $this->belongsTo('Kjamesy\Cms\Models\CmsLocale', 'locale_id');
+    public function locale(){
+        return $this->belongsTo('Kjamesy\Cms\Models\Locale', 'locale_id');
     }
 
     public function pagetranslationmeta(){
-        return $this->hasMany('Kjamesy\Cms\Models\CmsMeta');
+        return $this->hasMany('Kjamesy\Cms\Models\Meta');
     }
 
     public static function findATranslation($pageId, $localeId) {
-        return static::wherePageId($pageId)->whereLocaleId($localeId)->with('cmslocale')->with('pagetranslationmeta')->first();
+        return static::wherePageId($pageId)->whereLocaleId($localeId)->with('locale')->with('pagetranslationmeta')->first();
     }
 
     public static function findAllTranslations($pageId) {

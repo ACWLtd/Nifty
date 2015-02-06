@@ -38,7 +38,7 @@ class Category extends Eloquent
     }
 
     public static function getCategoryResource(){
-        return static::with('postsCount')->with('categorytranslations.cmslocale')->orderBy('name')->get();
+        return static::with('postsCount')->with('categorytranslations.locale')->orderBy('name')->get();
     }
 
     public static function getSingleCategoryResource($id) {

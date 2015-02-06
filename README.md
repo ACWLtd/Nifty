@@ -9,10 +9,7 @@ Run this to install the new database table:
 php artisan migrate --package=kjamesy/cms
 ```
 
-If you had published the package config file, take note of your custom configs and then republish this, overwriting the old one.
-```shell
-    php artisan config:publish kjamesy/cms
-``` 
+If you had published the package config file, this is now deprecated.
 
 ## Steps to Follow
 Install a fresh copy of Laravel 4.2.* and configure database and mail settings.
@@ -75,13 +72,7 @@ Publish the package assets:
 php artisan asset:publish kjamesy/cms
 ```
 
-__Optional:__ You can publish the package config file if you want to change the default admin routes:
-
-```shell
-	php artisan config:publish kjamesy/cms
-``` 
-
-__Optional:__ You can also publish the package view files if you want to modify the views:
+__Optional:__ You can publish the package view files if you want to modify the views:
 
 ```shell
 	php artisan view:publish kjamesy/cms

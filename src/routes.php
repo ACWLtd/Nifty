@@ -1,15 +1,13 @@
 <?php
 
-$routesConfig = Config::get('cms::config.routes');
-
-$login = array_key_exists('login', $routesConfig) ? $routesConfig['login'] : 'login';
-$logout = array_key_exists('logout', $routesConfig) ? $routesConfig['logout'] : 'logout';
-$admin = array_key_exists('admin', $routesConfig) ? $routesConfig['admin'] : 'admin';
-$pages = array_key_exists('pages', $routesConfig) ? $routesConfig['pages'] : 'admin/pages';
-$posts = array_key_exists('posts', $routesConfig) ? $routesConfig['posts'] : 'admin/posts';
-$locales = array_key_exists('locales', $routesConfig) ? $routesConfig['locales'] : 'admin/locales';
-$events = array_key_exists('events', $routesConfig) ? $routesConfig['events'] : 'admin/events';
-$users = array_key_exists('users', $routesConfig) ? $routesConfig['users'] : 'admin/users';
+$login = 'login';
+$logout = 'logout';
+$admin = 'admin';
+$pages = 'admin/pages';
+$posts = 'admin/posts';
+$locales = 'admin/locales';
+$events = 'admin/events';
+$users = 'admin/users';
 
 Route::get($login, ['as' => 'login', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@login']);
 

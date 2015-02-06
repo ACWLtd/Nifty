@@ -193,7 +193,7 @@ pagesAppServices.factory('Miscellaneous', ['$localStorage', function ($localStor
 
                     if ( value.pagetranslations.length ) {
                         angular.forEach(value.pagetranslations, function(translation, index) {
-                            value.translations.push(translation.cmslocale.locale);
+                            value.translations.push(translation.locale.locale);
                         });
                     }
                     

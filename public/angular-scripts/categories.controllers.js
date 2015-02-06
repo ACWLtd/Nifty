@@ -29,7 +29,7 @@ categoriesAppControllers.controller('CategoriesController', ['$rootScope', '$sco
 
 				if ( value.categorytranslations.length ) {
 					angular.forEach(value.categorytranslations, function(translation, index) {
-						value.translations.push(translation.cmslocale.locale);
+						value.translations.push(translation.locale.locale);
 					});
 				}
 
@@ -321,7 +321,7 @@ categoriesAppControllers.controller('EditTranslationController', ['$scope', '$st
 		if ( data.translation ) {
 			$scope.editCat.id = data.translation.id;
 			$scope.editCat.name = data.translation.name;
-			$scope.options.locale = data.translation.cmslocale.locale;
+			$scope.options.locale = data.translation.locale.locale;
 		}
 	});
 

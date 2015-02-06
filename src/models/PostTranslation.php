@@ -22,16 +22,16 @@ class PostTranslation extends Eloquent
         return $this->belongsTo('Kjamesy\Cms\Models\Post', 'post_id');
     }
 
-    public function cmslocale(){
-        return $this->belongsTo('Kjamesy\Cms\Models\CmsLocale', 'locale_id');
+    public function locale(){
+        return $this->belongsTo('Kjamesy\Cms\Models\Locale', 'locale_id');
     }
 
     public function posttranslationmeta(){
-        return $this->hasMany('Kjamesy\Cms\Models\CmsMeta');
+        return $this->hasMany('Kjamesy\Cms\Models\Meta');
     }
 
     public static function findATranslation($postId, $localeId) {
-        return static::wherePostId($postId)->whereLocaleId($localeId)->with('cmslocale')->with('posttranslationmeta')->first();
+        return static::wherePostId($postId)->whereLocaleId($localeId)->with('locale')->with('posttranslationmeta')->first();
     }
 
     public static function findAllTranslations($postId) {

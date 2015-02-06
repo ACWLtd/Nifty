@@ -27,15 +27,15 @@ class Page extends Node
     }
 
     public function pagemeta(){
-        return $this->hasMany('Kjamesy\Cms\Models\CmsMeta');
+        return $this->hasMany('Kjamesy\Cms\Models\Meta');
     }
 
     public static function getPageResource() {
-        return static::with('user')->with('pagetranslations.cmslocale')->orderBy(static::$orderBy)->get();
+        return static::with('user')->with('pagetranslations.locale')->orderBy(static::$orderBy)->get();
     }
 
     public static function getSinglePageResource($id) {
-        return static::with('user')->with('pagetranslations.cmslocale')->with('pagemeta')->find($id);
+        return static::with('user')->with('pagetranslations.locale')->with('pagemeta')->find($id);
     }
 
     public static function changePagesStatus($ids, $action) {

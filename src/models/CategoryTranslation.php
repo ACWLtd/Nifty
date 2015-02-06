@@ -14,12 +14,12 @@ class CategoryTranslation extends Eloquent
         return $this->belongsTo('Kjamesy\Cms\Models\Category', 'category_id');
     }
 
-    public function cmslocale(){
-        return $this->belongsTo('Kjamesy\Cms\Models\CmsLocale', 'locale_id');
+    public function locale(){
+        return $this->belongsTo('Kjamesy\Cms\Models\Locale', 'locale_id');
     }
 
     public static function findATranslation($categoryId, $localeId) {
-        return static::whereCategoryId($categoryId)->whereLocaleId($localeId)->with('cmslocale')->first();
+        return static::whereCategoryId($categoryId)->whereLocaleId($localeId)->with('locale')->first();
     }
 
 }

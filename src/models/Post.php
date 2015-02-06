@@ -30,15 +30,15 @@ class Post extends Eloquent
     }
 
     public function postmeta(){
-        return $this->hasMany('Kjamesy\Cms\Models\CmsMeta');
+        return $this->hasMany('Kjamesy\Cms\Models\Meta');
     }
 
     public static function getPostResource(){
-        return static::with('categories')->with('user')->with('posttranslations.cmslocale')->orderBy(static::$orderBy[0], static::$orderBy[1])->get();
+        return static::with('categories')->with('user')->with('posttranslations.locale')->orderBy(static::$orderBy[0], static::$orderBy[1])->get();
     }
 
     public static function getSinglePostResource($id){
-        return static::with('categories')->with('user')->with('posttranslations.cmslocale')->with('postmeta')->find($id);
+        return static::with('categories')->with('user')->with('posttranslations.locale')->with('postmeta')->find($id);
     }
 
     public static function changePostsStatus($ids, $action) {

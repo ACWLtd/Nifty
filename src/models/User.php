@@ -37,13 +37,13 @@ class User extends \Sentinel\Models\User
 
     public static function isContributor( $user )
     {
-        $isPublisher = false;
+        $isContributor = false;
 
-        $publisher = Sentry::findGroupByName('Contributor');
-        if ( $user->inGroup($publisher) )
-            $isPublisher = true;
+        $contributor = Sentry::findGroupByName('Contributor');
+        if ( $user->inGroup($contributor) )
+            $isContributor = true;
 
-        return $isPublisher;
+        return $isContributor;
     }
 
     public static function getUserResource(){
