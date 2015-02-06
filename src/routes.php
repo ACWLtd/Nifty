@@ -2,49 +2,22 @@
 
 $routesConfig = Config::get('cms::config.routes');
 
-if (is_array($routesConfig['login']))
-    $login = $routesConfig['login']['route'];
-else
-    $login = $routesConfig['login'];
+$login = array_key_exists('login', $routesConfig) ? $routesConfig['login'] : 'login';
+$logout = array_key_exists('logout', $routesConfig) ? $routesConfig['logout'] : 'logout';
+$admin = array_key_exists('admin', $routesConfig) ? $routesConfig['admin'] : 'admin';
+$pages = array_key_exists('pages', $routesConfig) ? $routesConfig['pages'] : 'admin/pages';
+$posts = array_key_exists('posts', $routesConfig) ? $routesConfig['posts'] : 'admin/posts';
+$locales = array_key_exists('locales', $routesConfig) ? $routesConfig['locales'] : 'admin/locales';
+$events = array_key_exists('events', $routesConfig) ? $routesConfig['events'] : 'admin/events';
+$users = array_key_exists('users', $routesConfig) ? $routesConfig['users'] : 'admin/users';
 
-if (is_array($routesConfig['logout']))
-    $logout = $routesConfig['logout']['route'];
-else
-    $logout = $routesConfig['logout'];
+Route::get($login, ['as' => 'login', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@login']);
 
-if (is_array($routesConfig['pages']))
-    $pages = $routesConfig['pages']['route'];
-else
-    $pages = $routesConfig['pages'];
+Route::post($login, ['as' => 'do-login', 'before' => 'cms/csrf', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@do_login']);
 
-if (is_array($routesConfig['posts']))
-    $posts = $routesConfig['posts']['route'];
-else
-    $posts = $routesConfig['posts'];
+Route::group(['before' => 'Sentinel\auth'], function() use($admin, $pages, $posts, $locales, $events, $users, $logout) {
 
-if (is_array($routesConfig['locales']))
-    $locales = $routesConfig['locales']['route'];
-else
-    $locales = $routesConfig['locales'];
-
-if (is_array($routesConfig['events']))
-    $events = $routesConfig['events']['route'];
-else
-    $events = $routesConfig['events'];
-
-if (is_array($routesConfig['users']))
-    $users = $routesConfig['users']['route'];
-else
-    $users = $routesConfig['users'];
-
-Route::get('login', ['as' => 'login', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@login']);
-
-Route::post('login', ['as' => 'do-login', 'before' => 'cms/csrf', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@do_login']);
-
-Route::group(['before' => 'Sentinel\auth'], function() use($routesConfig, $pages, $posts, $locales, $events, $users) {
-
-    Route::get('admin', ['as' => 'admin', function() use($routesConfig) {
-//        var_dump($routesConfig);
+    Route::get($admin, ['as' => 'admin', function() {
         return Redirect::route('pages.landing');
     }]);
 
@@ -123,5 +96,5 @@ Route::group(['before' => 'Sentinel\auth'], function() use($routesConfig, $pages
         Route::post($users . '/{action}/do-action', ['as' => 'users.do-action', 'uses' => 'Kjamesy\Cms\Controllers\UserController@do_action']);
     });
 
-    Route::get('logout', ['as' => 'logout', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@logout']);
+    Route::get($logout, ['as' => 'logout', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@logout']);
 });

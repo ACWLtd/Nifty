@@ -10,37 +10,15 @@ return [
     */
 
     'routes' => [
-        'login' => [
-            'route' => 'login'
-        ],
-
-        'logout' => [
-            'route' => 'logout'
-        ],
-
-        'admin'     => [
-            'route' => 'admin'
-        ],
-
-        'pages'     => [
-            'route' => 'admin/pages'
-        ],
-
-        'posts'     => [
-            'route' => 'admin/posts'
-        ],
-
-        'locales'     => [
-            'route' => 'admin/locales'
-        ],
-
-        'events'     => [
-            'route' => 'admin/events'
-        ],
-
-        'users'     => [
-            'route' => 'admin/users'
-        ],
-    ],
+        'login'     => 'login',
+        'logout'    => 'logout',
+        'admin'     => 'admin',
+        'pages'     => 'admin/pages',
+        'posts'     => 'admin/posts',
+        'locales'   => 'admin/locales',
+        'events'    => 'admin/events',
+        'users'     => 'admin/users'
+    ]
 
 ];
+

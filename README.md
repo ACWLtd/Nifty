@@ -9,6 +9,11 @@ Run this to install the new database table:
 php artisan migrate --package=kjamesy/cms
 ```
 
+If you had published the package config file, take note of your custom configs and then republish this, overwriting the old one.
+```shell
+    php artisan config:publish kjamesy/cms
+``` 
+
 ## Steps to Follow
 Install a fresh copy of Laravel 4.2.* and configure database and mail settings.
 
