@@ -55,6 +55,16 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="{{ $activeParent=='galleries' ? 'active' : '' }}">
+                        <a href="javascript:;"><i class="fa fa-picture-o"></i>&nbsp;Galleries <span class="fa arrow"></span> </a>
+                        <ul>
+                            <li class="{{ $active=='allgalleries' ? 'active' : '' }}">
+                                <a href="{{ URL::route('galleries.landing') }}">
+                                    <i class="fa fa-angle-right"></i>&nbsp;All Galleries
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="{{ $activeParent=='events' ? 'active' : '' }}">
                         <a href="javascript:;"><i class="fa fa-calendar"></i>&nbsp;Events <span class="fa arrow"></span> </a>
                         <ul>

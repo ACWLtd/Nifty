@@ -1,0 +1,46 @@
+				<div class="row" style="margin-bottom: 20px;">
+  					<div class="form-group col-xs-1">
+  						<label for="image-order-{{ $index }}">Order</label>
+			    		<input id="image-order-{{ $index }}" type="text" class="form-control" data-ng-trim="" data-ng-model="image.order" placeholder="Order" />
+			    	</div>						
+  					<div class="form-group col-xs-2">
+  						<label for="image-title-{{ $index }}">Title</label>
+			    		<input id="image-title-{{ $index }}" type="text" class="form-control" data-ng-trim="" data-ng-model="image.title" placeholder="Image title" />
+			    	</div>
+			    	<div class="form-group col-xs-4">
+			    		<label for="image-caption-{{ $index }}">Caption</label>
+			    		<span data-ng-if="image.hiddenCaptionEditor" class="btn btn-link btn-rect" data-ng-click="toggleImagesEditor('caption', $index, false)" title="Open in Editor">
+			    			Open in Editor
+			    		</span>
+			    		<span data-ng-if="! image.hiddenCaptionEditor" class="btn btn-link btn-rect" data-ng-click="toggleImagesEditor('caption', $index, true)" title="Close Editor">
+			    			Close Editor
+			    		</span>				    	
+			    		<textarea id="image-caption-{{ $index }}" data-ng-show="image.hiddenCaptionEditor" class="form-control" data-ng-trim="" rows="2" data-ng-model="image.caption" placeholder="Image Caption"></textarea>
+			    		<div data-ng-if="! image.hiddenCaptionEditor" ckeditor="" data-ng-model="$parent.$parent.image.caption"></div>
+			    	</div>
+			    	<div class="form-group col-xs-4">
+			    		<label for="image-url-{{ $index }}"><abbr title="HTML '<img sr=...' will be properly saved as a URL">Image Url</abbr></label>
+			    		<span data-ng-if="image.hiddenUrlEditor" class="btn btn-link btn-rect" data-ng-click="toggleImagesEditor('url', $index, false)" title="Open in Editor">
+			    			Open in Editor
+			    		</span>
+			    		<span data-ng-if="! image.hiddenUrlEditor" class="btn btn-link btn-rect" data-ng-click="toggleImagesEditor('url', $index, true)" title="Close Editor">
+			    			Close Editor
+			    		</span>				    	
+			    		<textarea id="image-url-{{ $index }}" data-ng-show="image.hiddenUrlEditor" class="form-control" data-ng-trim="" rows="2" data-ng-model="image.url" placeholder="Image Url"></textarea>
+			    		<div data-ng-if="! image.hiddenUrlEditor" ckeditor="" data-ng-model="$parent.$parent.image.url" placeholder="Image Url"></div>
+			    	</div>			    	
+			    	<div class="form-group col-xs-1" style="margin-top: 5px;">		    		
+			    		<span data-ng-hide="image.updating" class="btn btn-sm btn-metis-5 btn-rect" data-ng-click="updateImage($index)" title="Update Image" style="margin-bottom: 5px;">
+			    			<i class="fa" data-ng-class="image.url.length ? 'fa-check' : 'fa-edit'"></i>
+			    		</span>
+			    		<br />
+			    		<a data-ng-hide="image.updating" class="btn btn-sm btn-metis-6 btn-rect" data-ui-sref="showTranslations({ galleryId:options.galleryId, imageId:image.id })" title="Update Translations" style="margin-bottom: 5px;">
+			    			<i class="fa fa-language"></i>
+			    		</a>
+			    		<br />			    		
+			    		<span data-ng-hide="image.updating" class="btn btn-sm btn-metis-1 btn-rect" data-ng-click="destroyImage($index)" title="Destroy Image">
+			    			<i class="fa fa-trash"></i>
+			    		</span>
+			    		<span data-ng-show="image.updating"><img src="../packages/kjamesy/cms/images/ajax-loader.gif" /></span>
+			    	</div>
+			    </div>

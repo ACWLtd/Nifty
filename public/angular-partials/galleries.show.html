@@ -1,0 +1,35 @@
+<div class="col-lg-12">
+    <div class="box info">
+        <header>
+            <div class="icons">
+                <i class="fa fa-edit"></i>
+            </div>
+            <h5>Add/Remove Images</h5>
+            <div class="toolbar">
+            	<a class="btn btn-metis-1 btn-sm btn-flat" data-ui-sref="home"><span class="fa fa-list"></span> All Galleries</a>
+            </div>
+        </header>
+    </div>
+</div>
+<div class="col-md-12">
+	<h3 data-ng-cloak=""><i class="fa fa-file-image-o"></i> {{ gallery.name }}</h3> 
+
+	<div class="alert alert-info animate" role="alert" data-ng-class="options.hasMessage ? 'visible' : ''" data-ng-trim="">
+		<span  data-ng-bind-html="options.message | trusted"></span>
+	</div>
+
+	<div data-ng-repeat="image in images" data-ng-include="'../packages/kjamesy/cms/angular-partials/images.html'"></div>	
+
+	<div style="margin-bottom: 20px;">
+		<h3>New Image</h3>
+		<span class="btn btn-rect btn-default" data-ng-click="showImageForm()" data-ng-hide="options.imageForm"><i class="fa fa-plus-square-o"></i> Image</span>
+	</div>
+
+	<div data-ng-show="options.imageForm" ng-include="'../packages/kjamesy/cms/angular-partials/image-form.html'"></div>
+
+	<script type="text/js-lazy" data-ng-if="options.showEditor">
+	    // var editor = CKEDITOR.replace('content', {});
+	    CKFinder.setupCKEditor(null, '../packages/kjamesy/cms/ckfinder2.4');		  	
+	</script>
+	</div>
+</div>

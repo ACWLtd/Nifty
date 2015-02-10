@@ -6,6 +6,7 @@ $admin = 'admin';
 $pages = 'admin/pages';
 $posts = 'admin/posts';
 $locales = 'admin/locales';
+$galleries = 'admin/galleries';
 $events = 'admin/events';
 $users = 'admin/users';
 
@@ -13,7 +14,7 @@ Route::get($login, ['as' => 'login', 'uses' => 'Kjamesy\Cms\Controllers\AuthCont
 
 Route::post($login, ['as' => 'do-login', 'before' => 'cms/csrf', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@do_login']);
 
-Route::group(['before' => 'Sentinel\auth'], function() use($admin, $pages, $posts, $locales, $events, $users, $logout) {
+Route::group(['before' => 'Sentinel\auth'], function() use($admin, $pages, $posts, $locales, $galleries, $events, $users, $logout) {
 
     Route::get($admin, ['as' => 'admin', function() {
         return Redirect::route('pages.landing');
@@ -46,6 +47,11 @@ Route::group(['before' => 'Sentinel\auth'], function() use($admin, $pages, $post
     Route::get($locales, ['as' => 'locales.landing', 'uses' => 'Kjamesy\Cms\Controllers\LocaleController@index']);
     Route::resource($locales . '/locale-resource', 'Kjamesy\Cms\Controllers\LocaleResourceController');
 
+    /*****************GALLERIES*******************/
+    Route::get($galleries, ['as' => 'galleries.landing', 'uses' => 'Kjamesy\Cms\Controllers\GalleryController@index']);
+    Route::resource($galleries . '/gallery-resource', 'Kjamesy\Cms\Controllers\GalleryResourceController');
+    Route::get($galleries . '/images/{id}/show-image', ['as' => 'galleries.show-image', 'uses' => 'Kjamesy\Cms\Controllers\GalleryController@show_image']);
+
     /*****************EVENTS*******************/
     Route::get($events, ['as' => 'events.landing', 'uses' => 'Kjamesy\Cms\Controllers\EventController@index']);
     Route::resource($events . '/event-resource', 'Kjamesy\Cms\Controllers\EventResourceController');
@@ -56,7 +62,7 @@ Route::group(['before' => 'Sentinel\auth'], function() use($admin, $pages, $post
     Route::get($users . '/profile', ['as' => 'users.profile', 'uses' => 'Kjamesy\Cms\Controllers\UserController@get_profile']);
     Route::get($users . '/profile/password', ['as' => 'users.profile.password', 'uses' => 'Kjamesy\Cms\Controllers\UserController@get_profile_password']);
 
-    Route::group(['before' => 'cms/csrf'], function() use($pages, $posts, $locales, $events, $users) {
+    Route::group(['before' => 'cms/csrf'], function() use($pages, $posts, $locales, $galleries, $events, $users) {
 
         /*****************PAGES*******************/
         Route::post($pages . '/{action}/bulk-actions', ['as' => 'pages.bulk-actions', 'uses' => 'Kjamesy\Cms\Controllers\PageController@do_bulk_actions']);
@@ -84,6 +90,14 @@ Route::group(['before' => 'Sentinel\auth'], function() use($admin, $pages, $post
 
         /*****************LOCALES*******************/
         Route::post($locales . '/destroy', ['as' => 'locales.destroy', 'uses' => 'Kjamesy\Cms\Controllers\LocaleController@destroy']);
+
+        /*****************GALLERIES*******************/
+        Route::post($galleries . '/destroy', ['as' => 'galleries.destroy', 'uses' => 'Kjamesy\Cms\Controllers\GalleryController@destroy']);
+        Route::post($galleries . '/images/store', ['as' => 'galleries.store-image', 'uses' => 'Kjamesy\Cms\Controllers\GalleryController@store_image']);
+        Route::post($galleries . '/images/update', ['as' => 'galleries.update-image', 'uses' => 'Kjamesy\Cms\Controllers\GalleryController@update_image']);
+        Route::post($galleries . '/images/destroy', ['as' => 'galleries.destroy-image', 'uses' => 'Kjamesy\Cms\Controllers\GalleryController@destroy_image']);
+        Route::post($galleries . '/images/process-translation', ['as' => 'galleries.process-image-translation', 'uses' => 'Kjamesy\Cms\Controllers\GalleryController@process_translation']);
+        Route::post($galleries . '/images/destroy-translation', ['as' => 'galleries.destroy-image-translation', 'uses' => 'Kjamesy\Cms\Controllers\GalleryController@destroy_translation']);
 
         /*****************PAGES*******************/
         Route::post($events . '/{action}/bulk-actions', ['as' => 'events.bulk-actions', 'uses' => 'Kjamesy\Cms\Controllers\EventController@do_bulk_actions']);

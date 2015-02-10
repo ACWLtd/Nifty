@@ -22,6 +22,10 @@ class Locale extends Eloquent
         return $this->hasMany('Kjamesy\Cms\Models\PostTranslation', 'locale_id');
     }
 
+//    public function images(){
+//        return $this->hasMany('Kjamesy\Cms\Models\Image', 'locale_id');
+//    }
+
     public static function getLocaleResource() {
         return static::get();
     }
