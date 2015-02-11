@@ -575,6 +575,9 @@ postsAppControllers.controller('EditController', ['$scope', '$window', '$statePa
 
 	function initialSettings(situation) {
 		if ( situation == 'boot' ) {
+		  	$scope.editorOptions = {
+		    	customConfig: $scope.ckEditorLight
+		  	};			
 			$scope.edit = {};
 			$scope.edit.title = null;
 			$scope.edit.slug = null;
@@ -933,6 +936,9 @@ postsAppControllers.controller('EditTranslationController', ['$scope', '$window'
 
 	function initialSettings(situation) {
 		if ( situation == 'boot' ) {
+		  	$scope.editorOptions = {
+		    	customConfig: $scope.ckEditorLight
+		  	};			
 			$scope.edit = {};
 			$scope.edit.id = null;
 			$scope.edit.title = null;

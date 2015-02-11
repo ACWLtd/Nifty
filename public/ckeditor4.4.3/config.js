@@ -15,15 +15,16 @@ CKEDITOR.editorConfig = function( config ) {
 	config.toolbar_Full =
 	[
 		{ name: 'document', items : ['Templates','-','Preview','Print' ] },
-		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord' ] },
+		{ name: 'undoredo', items : ['Undo','Redo']},
 		{ name: 'editing', items : [ 'Find','Replace','-','Scayt'] },
 		{ name: 'links', items : [ 'Link','Unlink','Anchor' ] },
-		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline' ] },
 		{ name: 'morebasicstyles', items : [ 'Strike','Subscript','Superscript' ] },
 		{ name: 'tools', items : [ 'ShowBlocks', 'Maximize' ] },
 		{ name: 'html', items : ['Source'] },
 		'/',
-		{ name: 'styles', items : [ 'Styles','Format','Font','FontSize' ] },
+		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline' ] },
+		{ name: 'styles', items : [ 'Styles','Format' ] },
 		{ name: 'paragraph', items : [ 'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock', '-', 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote'] },
 		{ name: 'colors', items : [ 'TextColor','BGColor' ] },
 		{ name: 'insert', items : [ 'Image','Table','HorizontalRule','SpecialChar'] }

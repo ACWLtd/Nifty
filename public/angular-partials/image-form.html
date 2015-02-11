@@ -16,7 +16,7 @@
 			    			Close Editor
 			    		</span>				    	
 			    		<textarea id="image-caption" data-ng-show="options.hiddenCaptionEditor" class="form-control" data-ng-trim="" rows="2" data-ng-model="image.caption" placeholder="Image Caption"></textarea>
-			    		<div data-ng-if="! options.hiddenCaptionEditor" ckeditor="" data-ng-model="$parent.$parent.image.caption"></div>
+			    		<div data-ng-if="! options.hiddenCaptionEditor" ckeditor="editorOptions" data-ng-model="$parent.$parent.image.caption"></div>
 			    	</div>
 			    	<div class="form-group col-xs-4">
 			    		<label for="image-url"><abbr title="HTML '<img sr=...' will be properly saved as a URL">Image Url</abbr></label>
@@ -27,7 +27,7 @@
 			    			Close Editor
 			    		</span>				    	
 			    		<textarea id="image-url" data-ng-show="options.hiddenUrlEditor" class="form-control" data-ng-trim="" rows="2" data-ng-model="image.url" placeholder="Image Url"></textarea>
-			    		<div data-ng-if="! options.hiddenUrlEditor" ckeditor="" data-ng-model="$parent.$parent.image.url" placeholder="Image Url"></div>
+			    		<div data-ng-if="! options.hiddenUrlEditor" ckeditor="editorOptions" data-ng-model="$parent.$parent.image.url" placeholder="Image Url"></div>
 			    	</div>			    	
 			    	<div class="form-group col-xs-1" style="margin-top: 30px;">		    		
 			    		<span data-ng-hide="image.saving" class="btn btn-metis-5 btn-rect" data-ng-click="addImage(image)" title="Add Image" style="margin-bottom: 5px;">

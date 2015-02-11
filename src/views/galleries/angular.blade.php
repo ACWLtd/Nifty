@@ -37,7 +37,8 @@
 
 @section('page')
 
-    <div data-ng-app="galleriesApp" data-ng-controller="GalleriesController" data-ng-init="laravel_token = '<?= csrf_token(); ?>'">
+    <div data-ng-app="galleriesApp" data-ng-controller="GalleriesController"
+         data-ng-init="laravel_token = '<?= csrf_token(); ?>'; ckEditorLight = '<?= asset("packages/kjamesy/cms/ckeditor4.4.3/ckeditor-light-config.js"); ?>'">
         <div data-ui-view="">
 
         </div>

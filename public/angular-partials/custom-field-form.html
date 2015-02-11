@@ -13,7 +13,7 @@
 					<span data-ng-if="! options.hiddenEditor" class="btn-link" data-ng-click="toggleEditor(true)">Hide Editor</span>
 		    	</label>
 		    	<textarea data-ng-show="options.hiddenEditor" id="meta_value" class="form-control" data-ng-trim="" rows="4" data-ng-model="custom.meta_value"></textarea>
-		    	<div data-ng-if="! options.hiddenEditor" ckeditor="" data-ng-model="$parent.$parent.custom.meta_value" placeholder="Value"></div>
+		    	<div data-ng-if="! options.hiddenEditor" ckeditor="editorOptions" data-ng-model="$parent.$parent.custom.meta_value" placeholder="Value"></div>
 		    </div>
 		    <div class="form-group">
 		    	<span style="float: left">

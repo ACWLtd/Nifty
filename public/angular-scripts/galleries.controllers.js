@@ -414,6 +414,10 @@ galleriesAppControllers.controller('GalleryController', ['$scope', '$window', '$
 
 	function initialSettings(situation) {
 		if ( situation == 'boot' ) {
+		  	$scope.editorOptions = {
+		    	customConfig: $scope.ckEditorLight
+		  	};
+
 			$scope.gallery = null;
 
 			$scope.options = {};

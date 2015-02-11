@@ -4,7 +4,7 @@
 			    	</div>
 			    	<div class="form-group col-xs-7">
 			    		<textarea data-ng-show="customField.hiddenEditor" id="{{ customField.meta_key }}_value" class="form-control" data-ng-trim="" rows="4" data-ng-model="customField.meta_value"></textarea>
-			    		<div data-ng-if="! customField.hiddenEditor" ckeditor="" data-ng-model="$parent.$parent.customField.meta_value" placeholder="Value"></div>
+			    		<div data-ng-if="! customField.hiddenEditor" ckeditor="editorOptions" data-ng-model="$parent.$parent.customField.meta_value" placeholder="Value"></div>
 			    	</div>
 			    	<div class="form-group col-xs-1">
 			    		<span data-ng-hide="customField.updating" data-ng-if="customField.hiddenEditor" class="btn btn-default btn-rect" data-ng-click="toggleFieldsEditor($index, false)" title="Open In Editor" style="margin-bottom: 5px;">
