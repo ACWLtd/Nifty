@@ -66,7 +66,7 @@ pagesAppControllers.controller('PagesController', ['$rootScope', '$scope', '$win
 	function initialSettings(situation) {
 		if ( situation == 'tabs' ) {		
 			$scope.selected = [];
-			$scope.options.orderParam = 'default';
+			$scope.options.orderParam = 'lft';
 			$scope.formFields.checkall = false;	
 			$scope.formFields.hasMessage = false;
 			$scope.formFields.message = '0 items selected';		
@@ -91,7 +91,7 @@ pagesAppControllers.controller('PagesController', ['$rootScope', '$scope', '$win
 			$scope.formFields.message = '0 items selected';			
 			$scope.options = {};
 			$scope.options.activeTab = 'all';
-			$scope.options.orderParam = 'default';	
+			$scope.options.orderParam = 'lft';	
 			$scope.options.locales = [];
 		}
 	};
@@ -105,7 +105,7 @@ pagesAppControllers.controller('PagesController', ['$rootScope', '$scope', '$win
 	};
 
 	$scope.showChildCrumbs = function(level,sort) {
-		if ( level > 1 && sort == 'default' && $scope.options.activeTab == 'all' )
+		if ( level > 1 && sort == 'lft' && $scope.options.activeTab == 'all' )
 			return true;
 		else
 			return false;
