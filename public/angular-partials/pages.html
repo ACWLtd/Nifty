@@ -48,7 +48,7 @@
                         <label class="control-label" for="items-per-page">Items Per Page</label>
                         <select name="items-per-page" data-ng-model="pageSize" id="items-per-page" class="form-control">
                             <option value="0">All</option>
-                            <option value="1">1 (For Testing)</option>
+                            <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
@@ -101,9 +101,24 @@
                         </thead>
                         <tbody>
                             <tr dir-paginate="page in pages | itemsPerPage: pageSize | filter:query | orderBy:options.orderParam:reverse" class="page-row hover-row" data-ng-mouseenter="hover = true" data-ng-mouseleave="hover = false">
-                                <td><input type="checkbox" data-ng-model='page.selected' data-ng-change="checkboxChange(page.id, page.selected)" class="page-checkbox"></td>
-                                <td data-ng-if="! page.is_deleted"><span data-ng-if="page.is_online"><span data-ng-if="showChildCrumbs(page.level, options.orderParam)" data-ng-bind-html="childCrumbs(page.level) | trusted"></span><a data-ui-sref="edit({ id:page.id })">{{ page.title }}</a></span>
-                                    <span data-ng-if="! page.is_online"><span data-ng-if="showChildCrumbs(page.level, options.orderParam)" data-ng-bind-html="childCrumbs(page.level) | trusted"></span><a data-ui-sref="edit({ id:page.id })">{{ page.title }}</a><strong> - Draft </strong></span> 
+                                <td>
+                                    <input type="checkbox" data-ng-model='page.selected' data-ng-change="checkboxChange(page.id, page.selected)" class="page-checkbox">
+                                </td>
+                                <td data-ng-if="! page.is_deleted">
+                                    <span data-ng-if="page.is_online">
+                                        <span data-ng-if="showChildCrumbs(page.level, options.orderParam)" data-ng-bind-html="childCrumbs(page.level) | trusted"></span>
+                                        <a data-ui-sref="edit({ id:page.id })">
+                                            <span data-ng-if="page.level == 1"><strong>{{ page.title }}</strong></span>
+                                            <span data-ng-if="page.level > 1">{{ page.title }}</span>
+                                        </a>
+                                    </span>
+                                    <span data-ng-if="! page.is_online">
+                                        <span data-ng-if="showChildCrumbs(page.level, options.orderParam)" data-ng-bind-html="childCrumbs(page.level) | trusted"></span>                                     
+                                        <a data-ui-sref="edit({ id:page.id })">
+                                            <span data-ng-if="page.level == 1"><strong>{{ page.title }}</strong></span>
+                                            <span data-ng-if="page.level > 1">{{ page.title }}</span>   
+                                        </a><strong> - Draft </strong>
+                                    </span> 
                                     <div data-ng-class="{ visibility: ! hover }" class="more-options">
                                         <i class="fa fa-link"></i> {{ page.slug }}
                                     </div>

@@ -83,7 +83,7 @@ pagesAppControllers.controller('PagesController', ['$rootScope', '$scope', '$win
 		  	$scope.pageCategories.trash = null;
 			$scope.pages = null;			
 			$scope.currentPage = 1;
-		  	$scope.pageSize = 0;		
+		  	$scope.pageSize = 10;		
 			$scope.selected = [];
 			$scope.formFields = {};
 			$scope.formFields.checkall = false;
