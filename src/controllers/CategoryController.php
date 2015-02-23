@@ -37,6 +37,7 @@ class CategoryController extends \BaseController
         $id = Input::get('id');
         Category::whereId($id)->delete();
 
+        Cache::flush();
         return Response::json(['success' => 'Category successfully deleted']);
     }
 

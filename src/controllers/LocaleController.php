@@ -1,6 +1,6 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
-
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
@@ -33,6 +33,8 @@ class LocaleController extends \BaseController
         $id = Input::get('id');
         Locale::whereId($id)->delete();
 
+        Cache::flush();
+        
         return Response::json(['success' => 'Locale successfully deleted']);
     }
 

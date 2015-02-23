@@ -1,5 +1,6 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
@@ -32,6 +33,8 @@ class EventController extends \BaseController
         try {
             $eventIds = Input::get('events');
             Event::changeEventsStatus($eventIds, $action);
+
+            Cache::flush();
 
             return Response::json(['success' => "$action successful"]);
         } catch (Exception $e) {

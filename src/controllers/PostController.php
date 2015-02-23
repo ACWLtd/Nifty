@@ -47,6 +47,8 @@ class PostController extends \BaseController
             $postIds = Input::get('posts');
             Post::changePostsStatus($postIds, $action);
 
+            Cache::flush();
+
             return Response::json(['success' => "$action successful"]);
         } catch (Exception $e) {
             return Response::json(['error' => 'An error occurred'], 500);
@@ -264,6 +266,8 @@ class PostController extends \BaseController
 
             if ( $meta ) {
                 $meta->delete();
+
+                Cache::flush();
                 return Response::json(['success' => 'Custom Field successfully destroyed.']);
             }
         }

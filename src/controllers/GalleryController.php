@@ -41,6 +41,7 @@ class GalleryController extends \BaseController
         $id = Input::get('id');
         Gallery::whereId($id)->delete();
 
+        Cache::flush();
         return Response::json(['success' => 'Gallery successfully deleted']);
     }
 
@@ -146,6 +147,7 @@ class GalleryController extends \BaseController
         $id = Input::get('imageId');
         Image::whereId($id)->delete();
 
+        Cache::flush();
         return Response::json(['success' => 'Image successfully deleted']);
     }
 

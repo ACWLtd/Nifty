@@ -47,6 +47,8 @@ class PageController extends \BaseController
             $pageIds = Input::get('pages');
             Page::changePagesStatus($pageIds, $action);
 
+            Cache::flush();
+
             return Response::json(['success' => "$action successful"]);
         } catch (Exception $e) {
             return Response::json(['error' => 'An error occurred'], 500);
@@ -263,6 +265,8 @@ class PageController extends \BaseController
 
             if ( $meta ) {
                 $meta->delete();
+                Cache::flush();
+                
                 return Response::json(['success' => 'Custom Field successfully destroyed.']);
             }
         }
