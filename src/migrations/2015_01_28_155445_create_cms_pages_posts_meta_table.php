@@ -20,7 +20,7 @@ class CreateCmsPagesPostsMetaTable extends Migration {
 			$table->integer('page_translation_id')->unsigned()->nullable();
 			$table->integer('post_translation_id')->unsigned()->nullable();
 			$table->string('meta_key', 512);
-			$table->longText('meta_value');
+			$table->mediumText('meta_value');
 			$table->timestamps();
 
 			$table->index('meta_key');

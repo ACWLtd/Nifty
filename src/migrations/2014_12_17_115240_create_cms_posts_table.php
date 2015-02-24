@@ -19,7 +19,7 @@ class CreateCmsPostsTable extends Migration {
             $table->string('title', 255);
             $table->string('slug', 512);
             $table->string('summary',512);
-            $table->longText('content');
+            $table->mediumText('content');
             $table->integer('order');
             $table->boolean('is_online')->default(0);
             $table->boolean('is_deleted')->default(0);
