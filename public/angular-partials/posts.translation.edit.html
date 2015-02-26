@@ -46,6 +46,10 @@
 		    	<select class="form-control" id="is_online" data-ng-model="selects.is_online" data-ng-options="option as option.label for option in options.onlineOptions"></select>
 		    </div>
 		    <div class="form-group">
+		    	<label for="create_date" class="control-label">Create Date</label>
+		    	<input type="text" id="create_date" class="form-control" data-ng-trim="" data-ng-model="edit.create_date" jqdatepicker="" /> 
+		    </div> 		    
+		    <div class="form-group">
 		    	<label class="control-label"><i class="fa fa-warning text-danger"></i> <a class="btn btn-metis-1 btn-sm" href="" data-ng-click="destroy()" title="Destroy"><i class="fa fa-trash"></i></a></label>
 		    </div>  
 		    <div class="form-group" style="text-align: right; margin-top: 60px;">

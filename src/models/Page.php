@@ -12,7 +12,7 @@ class Page extends Node
         'summary' => 'required|max:512',
         'content' => 'required',
         'order' => 'integer',
-        'link' => 'URL'
+        'create_date' => 'date'
     ];
 
     protected static $cache_minutes = 1440;

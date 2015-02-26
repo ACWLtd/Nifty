@@ -9,7 +9,8 @@ class PostTranslation extends Eloquent
     public static $rules = [
         'title' => 'required|max:255',
         'summary' => 'required|max:512',
-        'content' => 'required'
+        'content' => 'required',
+        'create_date' => 'date'
     ];
 
     protected static $cache_minutes = 1440;

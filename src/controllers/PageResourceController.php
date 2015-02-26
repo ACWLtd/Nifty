@@ -1,5 +1,6 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -59,6 +60,7 @@ class PageResourceController extends \BaseController {
             }
 
             $order = $inputs['order'];
+            $created_at = Input::has('create_date') ? Carbon::createFromFormat('Y-m-d', $inputs['create_date'])->toDateTimeString() : Carbon::now()->toDateTimeString();
 
             if ( strlen($order) == 0 )
                 $order = 0;
@@ -70,7 +72,8 @@ class PageResourceController extends \BaseController {
                 'summary' => $inputs['summary'],
                 'content' => $inputs['content'],
                 'order' => $order,
-                'is_online' => $inputs['is_online']
+                'is_online' => $inputs['is_online'],
+                'created_at' => $created_at
             ];
 
             $page = Page::create($pageArr);
@@ -139,6 +142,10 @@ class PageResourceController extends \BaseController {
                 $slug = Utility::makeUniqueSlug($existingSlugs, Str::slug($inputs['slug']));
             }
 
+            $created_at = ( array_key_exists('create_date', $inputs) && strlen($inputs['create_date']) )
+                ? Carbon::createFromFormat('Y-m-d', $inputs['create_date'])->toDateTimeString()
+                : $oldPage->created_at;
+
             $oldPage->user_id = $this->user->id;
             $oldPage->title = $inputs['title'];
             $oldPage->slug = $slug;
@@ -146,6 +153,7 @@ class PageResourceController extends \BaseController {
             $oldPage->content = $inputs['content'];
             $oldPage->order = $order;
             $oldPage->is_online = $inputs['is_online'];
+            $oldPage->created_at = $created_at;
             $oldPage->save();
 
 

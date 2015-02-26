@@ -1,5 +1,6 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -94,6 +95,9 @@ class PostController extends \BaseController
 
             $post = Post::find(Input::get('postId'));
             $order = $post ? $post->order : 0;
+            $created_at = ( array_key_exists('create_date', $inputs) && strlen($inputs['create_date']) )
+                ? Carbon::createFromFormat('Y-m-d', $inputs['create_date'])->toDateTimeString()
+                : Carbon::now()->toDateTimeString();
 
             $translation = new PostTranslation;
             $translation->user_id = $this->user->id;
@@ -105,6 +109,7 @@ class PostController extends \BaseController
             $translation->content = $inputs['content'];
             $translation->order = $order;
             $translation->is_online = $inputs['is_online'];
+            $translation->created_at = $created_at;
             $translation->save();
 
             Cache::flush();
@@ -151,12 +156,17 @@ class PostController extends \BaseController
                 $slug = Utility::makeUniqueSlug($existingSlugs, Str::slug($inputs['slug']));
             }
 
+            $created_at = ( array_key_exists('create_date', $inputs) && strlen($inputs['create_date']) )
+                ? Carbon::createFromFormat('Y-m-d', $inputs['create_date'])->toDateTimeString()
+                : $oldTranslation->created_at;
+
             $oldTranslation->user_id = $this->user->id;
             $oldTranslation->title = $inputs['title'];
             $oldTranslation->slug = $slug;
             $oldTranslation->summary = $inputs['summary'];
             $oldTranslation->content = $inputs['content'];
             $oldTranslation->is_online = $inputs['is_online'];
+            $oldTranslation->created_at = $created_at;
             $oldTranslation->save();
 
 

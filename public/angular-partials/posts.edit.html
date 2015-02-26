@@ -58,7 +58,11 @@
 		    <div class="form-group">
 		    	<label for="order" class="control-label">Order</label>
 		    	<input type="text" id="order" class="form-control" data-ng-trim="" data-ng-model="edit.order" /> 
-		    </div>    
+		    </div>   
+		    <div class="form-group">
+		    	<label for="create_date" class="control-label">Create Date</label>
+		    	<input type="text" id="create_date" class="form-control" data-ng-trim="" data-ng-model="edit.create_date" jqdatepicker="" /> 
+		    </div> 			     
 		    <div class="form-group">
 		    	<div><label for="translations" class="control-label">Translations</label></div>
 		    	<span data-ng-repeat="locale in options.locales" data-ng-init="chosen = options.translations.indexOf(locale.locale) > -1 ? true : false">

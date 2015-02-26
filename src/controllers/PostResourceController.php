@@ -1,5 +1,6 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -54,6 +55,7 @@ class PostResourceController extends \BaseController {
             }
 
             $order = $inputs['order'];
+            $created_at = Input::has('create_date') ? Carbon::createFromFormat('Y-m-d', $inputs['create_date'])->toDateTimeString() : Carbon::now()->toDateTimeString();
 
             if ( strlen($order) == 0 )
                 $order = 0;
@@ -68,6 +70,7 @@ class PostResourceController extends \BaseController {
             $post->content = $inputs['content'];
             $post->order = $order;
             $post->is_online = $inputs['is_online'];
+            $post->created_at = $created_at;
             $post->save();
 
             $post->categories()->sync($categories);
@@ -130,6 +133,9 @@ class PostResourceController extends \BaseController {
                 }
             }
 
+            $created_at = ( array_key_exists('create_date', $inputs) && strlen($inputs['create_date']) )
+                ? Carbon::createFromFormat('Y-m-d', $inputs['create_date'])->toDateTimeString()
+                : $post->created_at;
             $categories = Input::get('post')['categories'] == null ? [Category::first()->id] : Input::get('post')['categories'];
 
             $post->user_id = $this->user->id;
@@ -139,6 +145,7 @@ class PostResourceController extends \BaseController {
             $post->content = $inputs['content'];
             $post->order = $order;
             $post->is_online = $inputs['is_online'];
+            $post->created_at = $created_at;
             $post->save();
 
             $post->categories()->sync($categories);

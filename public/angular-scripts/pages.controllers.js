@@ -338,6 +338,7 @@ pagesAppControllers.controller('CreateController', ['$scope', '$window', '$state
 			$scope.create.parent_id = null;
 			$scope.create.is_online = null;
 			$scope.create.order = null;
+			$scope.create.create_date = null;
 
 			$scope.selects = {};
 			$scope.selects.parent_id = null;
@@ -373,6 +374,7 @@ pagesAppControllers.controller('EditController', ['$scope', '$window', '$statePa
 			$scope.edit.summary = data.page.summary;
 			$scope.edit.content = data.page.content;
 			$scope.edit.order = data.page.order;
+			$scope.edit.create_date = data.page.created_at.split(' ')[0];
 
 			angular.forEach(data.parents, function(title, id) {
 				$scope.options.parents.push({ label: title, value: id }); 
@@ -596,6 +598,7 @@ pagesAppControllers.controller('EditController', ['$scope', '$window', '$statePa
 			$scope.edit.parent_id = null;
 			$scope.edit.is_online = null;
 			$scope.edit.order = null;
+			$scope.edit.create_date = null;
 
 			$scope.selects = {};
 			$scope.selects.parent_id = null;
@@ -703,6 +706,7 @@ pagesAppControllers.controller('CreateTranslationController', ['$scope', '$windo
 			$scope.create.summary = null;
 			$scope.create.content = null;
 			$scope.create.is_online = null;
+			$scope.create.create_date = null;
 
 			$scope.selects = {};
 			$scope.selects.is_online = null;
@@ -738,6 +742,7 @@ pagesAppControllers.controller('EditTranslationController', ['$scope', '$window'
 				$scope.edit.slug = data.translation.slug;
 				$scope.edit.summary = data.translation.summary;
 				$scope.edit.content = data.translation.content;
+				$scope.edit.create_date = data.translation.created_at.split(' ')[0];
 
 				$scope.selects.is_online = data.translation.is_online ? $scope.options.onlineOptions[1] : $scope.options.onlineOptions[0];
 				$scope.options.locale = data.translation.locale.locale;
@@ -960,6 +965,7 @@ pagesAppControllers.controller('EditTranslationController', ['$scope', '$window'
 			$scope.edit.summary = null;
 			$scope.edit.content = null;
 			$scope.edit.is_online = null;
+			$scope.edit.create_date = null;
 
 			$scope.selects = {};
 			$scope.selects.is_online = null;

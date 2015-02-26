@@ -28,9 +28,12 @@
         }
 
     </style>
+    {{ HTML::style('packages/kjamesy/cms/angular-modules/jquery-ui-1.11.2.custom/jquery-ui.min.css') }}
+    {{ HTML::style('packages/kjamesy/cms/angular-modules/jquery-ui-1.11.2.custom/jquery-ui.theme.min.css') }}
     {{ HTML::style('packages/kjamesy/cms/angular-css/animate.min.css') }}
     {{ HTML::script('packages/kjamesy/cms/js/jQuery-1.10.2.min.js') }}
     {{ HTML::script('packages/kjamesy/cms/angular-1.2.9/angular.min.js') }}
+    {{ HTML::script('packages/kjamesy/cms/angular-modules/jquery-ui-1.11.2.custom/jquery-ui.min.js') }}
 @stop
 
 @section('page-title') <h3><i class="fa fa-quote-left"></i> Posts</h3> @stop
