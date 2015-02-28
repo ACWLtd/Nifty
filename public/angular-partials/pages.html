@@ -12,7 +12,11 @@
     </div>
 </div>
 <div class="col-md-12">
-    <div class="pages-row" data-ng-cloak=""> <!-- data-ng-show="pages[0]" -->
+    <div class="text-center" data-ng-show="options.loading">
+        <img src="../packages/kjamesy/cms/images/ajax-loader.gif" alt="Loading..." />
+    </div>
+
+    <div class="pages-row" data-ng-cloak="" data-ng-show="! options.loading"> <!-- data-ng-show="pages[0]" -->
         <div class="row">
             <div class="col-sm-12" style="margin-bottom: 20px;">
                 <ul class="nav nav-tabs">

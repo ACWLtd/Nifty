@@ -15,6 +15,7 @@ pagesAppControllers.controller('PagesController', ['$rootScope', '$scope', '$win
 	});
 
 	initialSettings('boot');
+	$scope.options.loading = true;
 
 	Pages.get(function(data) {
 		var pagesArr = [];
@@ -60,7 +61,9 @@ pagesAppControllers.controller('PagesController', ['$rootScope', '$scope', '$win
 
 		angular.forEach(data.locales, function(locale, index) {
 			$scope.options.locales.push(locale);
-		});		
+		});
+
+		$scope.options.loading = false;
 	});
 
 	function initialSettings(situation) {
@@ -274,22 +277,43 @@ pagesAppControllers.controller('PagesController', ['$rootScope', '$scope', '$win
 }]);
 
 pagesAppControllers.controller('CreateController', ['$scope', '$window', '$state', 'Pages', 'BespokePages', 'Miscellaneous', function($scope, $window, $state, Pages, BespokePages, Miscellaneous) {
-	$scope.onReady = function () {
-		initialSettings('boot');
 
-		BespokePages.getParents().then(function(data) {
-			angular.forEach(data.parents, function(title, id) {
-				$scope.options.parents.push({ label: title, value: id }); 
-			});
+	initialSettings('boot');
+	$scope.options.loading = true;
 
-			$scope.selects.parent_id = $scope.options.parents[0];
+	$scope.onReady = function() {
+		$scope.options.showEditor = true;
+	};
 
-			$scope.selects.is_online = $scope.options.onlineOptions[0];
-
-			$scope.options.showEditor = true;
+	Pages.get(function(data) {
+		var pagesArr = [];
+		angular.forEach(data.pagesTree, function(value) {
+			if ( value.id ) {
+				value.level = 1;
+				if ( ! value.is_deleted )
+					pagesArr.push(value);
+			}
+			else {
+				Miscellaneous.childSelectsIterator( pagesArr, value, 0, 2 );
+			}
 		});
 
-	};
+		var parents = [{ label : '(no parent)', value: 0 }];
+
+		angular.forEach(pagesArr, function(page) {
+			var preLbl = '';
+			for( var i = 1; i < page.level; i++ ) {
+				preLbl += '—';
+			}
+
+			parents.push({ label: preLbl + page.title, value: page.id});
+		});
+
+		$scope.options.parents = parents;
+		$scope.selects.parent_id = $scope.options.parents[0];
+		$scope.selects.is_online = $scope.options.onlineOptions[0];
+		$scope.options.loading = false;
+	});
 
 	$scope.processForm = function() {
 		$scope.create.parent_id = $scope.selects.parent_id.value;
@@ -365,53 +389,77 @@ pagesAppControllers.controller('CreateController', ['$scope', '$window', '$state
 
 pagesAppControllers.controller('EditController', ['$scope', '$window', '$stateParams', 'Pages', 'BespokePages', 'Miscellaneous', function($scope, $window, $stateParams, Pages, BespokePages, Miscellaneous) {
 
-	$scope.onReady = function () {
-		initialSettings('boot');
-
-		Pages.get({ id:$stateParams.id }, function(data) {
-			$scope.edit.title = data.page.title;
-			$scope.edit.slug = data.page.slug;
-			$scope.edit.summary = data.page.summary;
-			$scope.edit.content = data.page.content;
-			$scope.edit.order = data.page.order;
-			$scope.edit.create_date = data.page.created_at.split(' ')[0];
-
-			angular.forEach(data.parents, function(title, id) {
-				$scope.options.parents.push({ label: title, value: id }); 
-			});
-
-			angular.forEach($scope.options.parents, function(parent, index) {
-				if ( parent.value == data.page.parent_id )
-					$scope.selects.parent_id = $scope.options.parents[index];
-			});
-
-			angular.forEach(data.page.pagetranslations, function(translation, index) {
-				if ( translation.locale ) {
-					$scope.options.translations.push(translation.locale.locale);
-				}
-			});
-
-			angular.forEach(data.page.pagemeta, function(meta, index) {
-				meta.updating = false;
-				meta.hiddenEditor = true;
-				$scope.customFields.push(meta);
-			});
-
-			$scope.options.metaKeys = data.metaKeys;
-
-			angular.forEach(data.locales, function(locale, index) {
-				$scope.options.locales.push(locale);
-			});			
-
-			if ( ! $scope.selects.parent_id )
-				$scope.selects.parent_id = $scope.options.parents[0];
-
-			$scope.selects.is_online = data.page.is_online ? $scope.options.onlineOptions[1] : $scope.options.onlineOptions[0];
-
-			$scope.options.showEditor = true;
-
-		});
+	initialSettings('boot');
+	$scope.options.loading = true;
+	$scope.onReady = function() {
+		$scope.options.showEditor = true;
 	};
+
+	Pages.get({ id:$stateParams.id }, function(data) {
+		$scope.edit.title = data.page.title;
+		$scope.edit.slug = data.page.slug;
+		$scope.edit.summary = data.page.summary;
+		$scope.edit.content = data.page.content;
+		$scope.edit.order = data.page.order;
+		$scope.edit.create_date = data.page.created_at.split(' ')[0];
+
+		var pagesArr = [];
+		angular.forEach(data.pagesTree, function(value) {
+			if ( value.id ) {
+				value.level = 1;
+				if ( ! value.is_deleted && value.id != $stateParams.id )
+					pagesArr.push(value);
+			}
+			else {
+				Miscellaneous.childSelectsIterator( pagesArr, value, $stateParams.id, 2 );
+			}
+		});
+
+		var parents = [{ label : '(no parent)', value: 0 }];
+
+		angular.forEach(pagesArr, function(page) {
+			var preLbl = '';
+			for( var i = 1; i < page.level; i++ ) {
+				preLbl += '—';
+			}
+
+			parents.push({ label: preLbl + page.title, value: page.id});
+		});
+
+		$scope.options.parents = parents;
+
+		angular.forEach($scope.options.parents, function(parent, index) {
+			if ( parent.value == data.page.parent_id )
+				$scope.selects.parent_id = $scope.options.parents[index];
+		});
+
+		angular.forEach(data.page.pagetranslations, function(translation, index) {
+			if ( translation.locale ) {
+				$scope.options.translations.push(translation.locale.locale);
+			}
+		});
+
+		angular.forEach(data.page.pagemeta, function(meta, index) {
+			meta.updating = false;
+			meta.hiddenEditor = true;
+			$scope.customFields.push(meta);
+		});
+
+		$scope.options.metaKeys = data.metaKeys;
+
+		angular.forEach(data.locales, function(locale, index) {
+			$scope.options.locales.push(locale);
+		});
+
+		if ( ! $scope.selects.parent_id )
+			$scope.selects.parent_id = $scope.options.parents[0];
+
+		$scope.selects.is_online = data.page.is_online ? $scope.options.onlineOptions[1] : $scope.options.onlineOptions[0];
+
+		$scope.options.showEditor = true;
+		$scope.options.loading = false;
+
+	});
 
 	$scope.processForm = function() {
 		$scope.edit.parent_id = $scope.selects.parent_id.value;

@@ -18,7 +18,7 @@
 		<span  data-ng-bind-html="options.message | trusted"></span>
 	</div>
 
-	<form data-ng-submit="processForm()">	
+	<form data-ng-submit="processForm()">
 		<div class="col-md-9" style="padding-left: 0">                 
 		    <div class="form-group">
 		    	<label for="title" class="control-label">Title</label>
@@ -37,8 +37,10 @@
 		    <div class="form-group">
 		    	<label for="slug" class="control-label">Url Slug (!)</label>
 		    	<input type="text" id="slug" class="form-control" data-ng-trim="" data-ng-model="create.slug" /> 
-		    </div>  		
-		    <div class="form-group">
+		    </div>
+
+			<img src="../packages/kjamesy/cms/images/ajax-loader.gif" alt="Loading..." data-ng-show="options.loading"/>
+		    <div class="form-group" data-ng-show="! options.loading">
 		    	<label for="parent_id" class="control-label">Page parent</label>
 		    	<select class="form-control" id="parent_id" data-ng-model="selects.parent_id" data-ng-options="parent as parent.label for parent in options.parents"></select>
 		    </div> 

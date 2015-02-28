@@ -92,11 +92,14 @@ class PageResourceController extends \BaseController {
     public function show($id)
     {
         $page = Page::getSinglePageResource($id);
-        $parents = Page::getParentOptions( $page->id );
         $locales = Locale::getLocaleResource();
         $metaKeys = Meta::getPageMetaKeysOptionsList($page->id);
 
-        return Response::json(compact('page', 'parents', 'locales', 'metaKeys'));
+        $parents = Page::getPageResource(); /******Fix for Parents thingy *****/
+        $backendPages = new PagesHelper($parents);
+        $pagesTree = $backendPages->getPagesTree();
+
+        return Response::json(compact('page', 'pagesTree', 'locales', 'metaKeys'));
     }
 
 

@@ -215,6 +215,23 @@ pagesAppServices.factory('Miscellaneous', ['$localStorage', function ($localStor
             });
         },
 
+        //For use when constructing hierarchy of parents for dropdown
+        childSelectsIterator: function(pagesArr, obj, exceptId, level) {
+            var _this = this;
+
+            angular.forEach(obj, function(value) {
+                if ( value.id ) {
+                    value.level = level;
+
+                    if ( ! value.is_deleted && value.id != exceptId )
+                        pagesArr.push(value);
+                }
+                else {
+                    _this.childSelectsIterator( pagesArr, value, exceptId, level+1 );
+                }
+            });
+        },
+
         childCrumbs: function(num, html) {
             
             var output = '';
