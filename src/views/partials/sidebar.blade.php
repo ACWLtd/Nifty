@@ -75,6 +75,22 @@
                             </li>
                         </ul>
                     </li>
+                    @if ( Config::get('cms::config')['has_extensions'] )
+                        @foreach ( Config::get('cms::config')['cms_extensions'] as $key => $extension )
+                            <li class="{{ $activeParent == strtolower($key) ? 'active' : '' }}">
+                                <a href="javascript:;"><i class="{{ $extension['font-awesome-class'] }}"></i>&nbsp;{{ Str::title($key) }} <span class="fa arrow"></span> </a>
+                                <ul>
+                                    @foreach ( $extension['children'] as $child )
+                                        <li class="{{ $active == Str::slug($child['name']) ? 'active' : '' }}">
+                                            <a href="{{ URL::route($child['route-name']) }}">
+                                                <i class="fa fa-angle-right"></i>&nbsp; {{ $child['name'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @endforeach
+                    @endif
                     <li class="{{ $activeParent=='users' ? 'active' : '' }}">
                         <a href="javascript:;"><i class="fa fa-user"></i>&nbsp;Users <span class="fa arrow"></span> </a>
                         <ul>
@@ -89,12 +105,6 @@
                                         <i class="fa fa-angle-right"></i>&nbsp;All Users
                                     </a>
                                 </li>
-                                {{--<li class="{{ $active=='createuser' ? 'active' : '' }}">--}}
-                                    {{--<a href="{{ URL::route('sentinel.users.create') }}">--}}
-                                        {{--<i class="fa fa-angle-right"></i>&nbsp;New User--}}
-                                    {{--</a>--}}
-                                {{--</li>--}}
-
                             @endif
                         </ul>
                     </li>
