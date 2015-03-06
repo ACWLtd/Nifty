@@ -108,7 +108,7 @@
                                 <td>
                                     <input type="checkbox" data-ng-model='page.selected' data-ng-change="checkboxChange(page.id, page.selected)" class="page-checkbox">
                                 </td>
-                                <td data-ng-if="! page.is_deleted">
+                                <td data-ng-if="! page.is_deleted" style="max-width: 350px; overflow:hidden">
                                     <span data-ng-if="page.is_online">
                                         <span data-ng-if="showChildCrumbs(page.level, options.orderParam)" data-ng-bind-html="childCrumbs(page.level) | trusted"></span>
                                         <a data-ui-sref="edit({ id:page.id })">

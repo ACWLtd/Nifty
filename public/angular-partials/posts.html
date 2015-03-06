@@ -105,7 +105,7 @@
                         <tbody>
                             <tr dir-paginate="post in posts | itemsPerPage: pageSize | filter:query | orderBy:options.orderParam:reverse" class="post-row hover-row" data-ng-mouseenter="hover = true" data-ng-mouseleave="hover = false">
                                 <td><input type="checkbox" data-ng-model='post.selected' data-ng-change="checkboxChange(post.id, post.selected)" class="post-checkbox"></td>
-                                <td data-ng-if="! post.is_deleted">
+                                <td data-ng-if="! post.is_deleted" style="max-width: 350px; overflow:hidden">
                                     <span data-ng-if="post.is_online"><a data-ui-sref="edit({ id:post.id })">{{ post.title }}</a></span>
                                     <span data-ng-if="! post.is_online"><a data-ui-sref="edit({ id:post.id })">{{ post.title }}</a><strong> - Draft </strong></span> 
                                     <div data-ng-class="{ visibility: ! hover }" class="more-options">

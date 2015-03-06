@@ -149,7 +149,7 @@
                                 <td>
                                     <input type="checkbox" data-ng-model='anEvent.selected' data-ng-change="checkboxChange(anEvent.id, anEvent.selected)" class="anEvent-checkbox">
                                 </td>
-                                <td>
+                                <td style="max-width: 300px; overflow:hidden">
                                     <span data-ng-if="! anEvent.is_approved"><a data-ui-sref="edit({ id:anEvent.id })">{{ anEvent.title }}</a><strong> - Pending </strong></span> 
                                     <span data-ng-if="anEvent.is_approved"><a data-ui-sref="edit({ id:anEvent.id })">{{ anEvent.title }}</a></span> 
                                     <div data-ng-class="{ visibility: ! hover }" class="more-options">
@@ -159,7 +159,7 @@
                                 <td>
                                     <a href="mailto:{{ anEvent.email }}" title="{{ anEvent.email }}">{{ anEvent.first_name + ' ' + anEvent.last_name }}</a>                          
                                 </td>
-                                <td>
+                                <td style="max-width: 200px; overflow:hidden">
                                     {{ anEvent.organisation }}
                                 </td>
                                 <td>
