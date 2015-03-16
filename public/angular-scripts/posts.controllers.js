@@ -14,6 +14,7 @@ postsAppControllers.controller('PostsController', ['$rootScope', '$scope', '$win
 	});
 
 	initialSettings('boot');
+    $scope.options.loading = true;
 
 	Posts.get(function(data) {
 		var postsArr = [];
@@ -72,7 +73,9 @@ postsAppControllers.controller('PostsController', ['$rootScope', '$scope', '$win
 
 		angular.forEach(data.locales, function(locale, index) {
 			$scope.options.locales.push(locale);
-		});	
+		});
+
+        $scope.options.loading = false;
 	});
 
 
