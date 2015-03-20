@@ -1,6 +1,7 @@
 <?php namespace Kjamesy\Cms\Models;
 
 use Cartalyst\Sentry\Facades\Laravel\Sentry;
+use Illuminate\Support\Facades\Redirect;
 
 class User extends \Sentinel\Models\User
 {
@@ -26,24 +27,34 @@ class User extends \Sentinel\Models\User
 
     public static function isAdmin( $user )
     {
-        $isAdmin = false;
+        if ( $user ) { //Try and fix the trying to get property of a non-object bug
+            $isAdmin = false;
 
-        $admin = Sentry::findGroupByName('Administrator');
-        if ( $user->inGroup($admin) )
-            $isAdmin = true;
+            $admin = Sentry::findGroupByName('Administrator');
+            if ($user->inGroup($admin))
+                $isAdmin = true;
 
-        return $isAdmin;
+            return $isAdmin;
+        }
+        else {
+            Redirect::route('logout');
+        }
     }
 
     public static function isContributor( $user )
     {
-        $isContributor = false;
+        if ( $user ) { //Try and fix the trying to get property of a non-object bug
+            $isContributor = false;
 
-        $contributor = Sentry::findGroupByName('Contributor');
-        if ( $user->inGroup($contributor) )
-            $isContributor = true;
+            $contributor = Sentry::findGroupByName('Contributor');
+            if ( $user->inGroup($contributor) )
+                $isContributor = true;
 
-        return $isContributor;
+            return $isContributor;
+        }
+        else {
+            Redirect::route('logout');
+        }
     }
 
     public static function getUserResource(){
