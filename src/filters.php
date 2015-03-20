@@ -11,8 +11,10 @@ Route::filter('cms/csrf', function()
 
 Route::filter('cms/auth', function ()
 {
-    if ( ! Sentry::check() || ! Session::get('userId') )
-        return Redirect::guest(route('sentinel.login'));
+    if ( ! Sentry::check() || ! Session::get('userId') || ! Sentry::getUser() ) {
+        Sentry::logout();
+        return Redirect::route('login');
+    }
 });
 
 

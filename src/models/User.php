@@ -27,34 +27,24 @@ class User extends \Sentinel\Models\User
 
     public static function isAdmin( $user )
     {
-        if ( $user ) { //Try and fix the trying to get property of a non-object bug
-            $isAdmin = false;
+        $isAdmin = false;
 
-            $admin = Sentry::findGroupByName('Administrator');
-            if ($user->inGroup($admin))
-                $isAdmin = true;
+        $admin = Sentry::findGroupByName('Administrator');
+        if ($user->inGroup($admin))
+            $isAdmin = true;
 
-            return $isAdmin;
-        }
-        else {
-            Redirect::route('logout');
-        }
+        return $isAdmin;
     }
 
     public static function isContributor( $user )
     {
-        if ( $user ) { //Try and fix the trying to get property of a non-object bug
-            $isContributor = false;
+        $isContributor = false;
 
-            $contributor = Sentry::findGroupByName('Contributor');
-            if ( $user->inGroup($contributor) )
-                $isContributor = true;
+        $contributor = Sentry::findGroupByName('Contributor');
+        if ( $user->inGroup($contributor) )
+            $isContributor = true;
 
-            return $isContributor;
-        }
-        else {
-            Redirect::route('logout');
-        }
+        return $isContributor;
     }
 
     public static function getUserResource(){
