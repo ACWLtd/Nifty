@@ -14,7 +14,7 @@ Route::get($login, ['as' => 'login', 'uses' => 'Kjamesy\Cms\Controllers\AuthCont
 
 Route::post($login, ['as' => 'do-login', 'before' => 'cms/csrf', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@do_login']);
 
-Route::group(['before' => 'Sentinel\auth'], function() use($admin, $pages, $posts, $locales, $galleries, $events, $users, $logout) {
+Route::group(['before' => 'cms/auth'], function() use($admin, $pages, $posts, $locales, $galleries, $events, $users, $logout) {
 
     Route::get($admin, ['as' => 'admin', function() {
         return Redirect::route('pages.landing');
