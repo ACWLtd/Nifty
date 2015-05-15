@@ -1,6 +1,6 @@
 {
     "name": "kjamesy/cms",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "A nifty little CMS written in Laravel 4.2 and AngularJS - intended for use in own projects",
     "authors": [
         {
