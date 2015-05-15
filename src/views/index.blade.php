@@ -27,12 +27,12 @@
                     <div class="row">
                         <a class="quick-btn" href="#">
                             <i class="fa fa-user fa-2x"></i>
-                            <span>{{ $aUser->first_name . ' ' . Str::upper( Str::limit($aUser->last_name, 1 ,'') ) }}</span> 
+                            <span>{!! $aUser->first_name . ' ' . Str::upper( Str::limit($aUser->last_name, 1 ,'') ) !!}</span>
                         </a>                    
                         <a class="quick-btn" href="#">
                             <i class="fa fa-quote-left fa-2x"></i>
                             <span>Posts</span> 
-                            <span class="label label-danger">{{ count($aUser->posts) }}</span> 
+                            <span class="label label-danger">{!! count($aUser->posts) !!}</span>
                         </a> 
                     </div> 
                 @endforeach                
@@ -40,8 +40,4 @@
             <hr>
         </div>               
     </div> 
-@stop
-
-@section('page-js')
-
 @stop

@@ -1,29 +1,25 @@
 {
     "name": "kjamesy/cms",
-    "version": "0.3.2",
-    "description": "A nifty little CMS written in Laravel 4.2 and AngularJS - intended for use in own projects",
+    "version": "1.0.0-alpha",
+    "description": "A nifty little CMS written in Laravel 5 and AngularJS - intended for use in own projects",
+    "type": "Laravel",
     "authors": [
         {
             "name": "kJamesy",
             "email": "james@acw.uk.com"
         }
     ],
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "4.2.*",
-        "baum/baum": "1.0.13",
-        "rydurham/sentinel": "2.0.0a2"
+        "illuminate/html": "5.0.*@dev",
+        "rydurham/sentinel": "~2",
+        "baum/baum": "1.1.1"
+
     },
     "autoload": {
-        "classmap": [
-            "src/migrations",
-            "src/models",
-            "src/controllers",
-            "src/helpers"
-        ],
-        "psr-0": {
+        "psr-4": {
             "Kjamesy\\Cms\\": "src/"
         }
-    },
-    "minimum-stability": "stable"
+    }
 }

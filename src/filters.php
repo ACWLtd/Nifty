@@ -1,5 +1,4 @@
 <?php
-//$routesConfig = Config::get('Sentinel::config');
 
 Route::filter('cms/csrf', function()
 {
@@ -16,20 +15,3 @@ Route::filter('cms/auth', function ()
         return Redirect::route('login');
     }
 });
-
-
-
-//Route::filter('cms/checkLoggedIn', function() use($routesConfig)
-//{
-//    if ( ! Sentry::check() ) {
-//        Session::put( 'originalRequest', Request::fullUrl() );
-//        return Redirect::to($routesConfig['routes']['login']['route']);
-//    }
-//});
-
-
-//Route::filter('Sentinel\auth', function() use($routesConfig)
-//{
-//    if ( Sentry::check() )
-//        return Redirect::to($routesConfig['routes']['admin']['route']);
-//});

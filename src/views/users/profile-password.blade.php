@@ -3,7 +3,7 @@
 @section('title')Users @stop
 
 @section('page-css')
-    {{ HTML::script('packages/kjamesy/cms/js/jQuery-1.10.2.min.js') }}
+    {!! HTML::script('packages/kjamesy/cms/js/jQuery-1.10.2.min.js') !!}
 @stop
 
 @section('page-title') <h3><i class="fa fa-user"></i> Users</h3> @stop
@@ -17,7 +17,7 @@
                 </div>
                 <h5>Your Profile</h5>
                 <div class="toolbar">
-                    <a class="btn btn-metis-1 btn-sm btn-flat" href="{{ URL::route('users.profile') }}"><i class="fa fa-user"></i> Your Profile</a>            
+                    <a class="btn btn-metis-1 btn-sm btn-flat" href="{!! URL::route('users.profile') !!}"><i class="fa fa-user"></i> Your Profile</a>
                 </div>
             </header>
         </div>
@@ -26,7 +26,7 @@
         @if ( Session::has('success') )
             <div class="alert alert-dismissable alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                {{ Session::get('success') }}
+                {!! Session::get('success') !!}
             </div>
         @endif 
 
@@ -37,24 +37,24 @@
             </div>
         @endif 
 
-        {{ Form::open(['route' => 'users.profile.password.update', 'class' => 'form-horizontal']) }}  
+        {!! Form::open(['route' => 'users.profile.password.update', 'class' => 'form-horizontal']) !!}
             <div class="col-md-9">                 
-                <div class="form-group {{ Session::has('existing_pass_error') ? 'has-error' : '' }}">
-                    {{ Form::label('existing_password', Session::has('existing_pass_error') ? Session::get('existing_pass_error') : 'Existing Password', ['class' => 'control-label col-sm-2']) }}
+                <div class="form-group {!! Session::has('existing_pass_error') ? 'has-error' : '' !!}">
+                    {!! Form::label('existing_password', Session::has('existing_pass_error') ? Session::get('existing_pass_error') : 'Existing Password', ['class' => 'control-label col-sm-2']) !!}
                     <div class="col-sm-10">
-                        {{ Form::password('existing_password', ['id' => 'existing_password', 'class' => 'form-control']) }}
+                        {!! Form::password('existing_password', ['id' => 'existing_password', 'class' => 'form-control']) !!}
                     </div>                    
                 </div> 
-                <div class="form-group {{ $errors->first('new_password') ? 'has-error' : '' }}">
-                    {{ Form::label('new_password', $errors->first('new_password'), ['class' => 'control-label col-sm-2']) }}
+                <div class="form-group {!! $errors->first('new_password') ? 'has-error' : '' !!}">
+                    {!! Form::label('new_password', $errors->first('new_password'), ['class' => 'control-label col-sm-2']) !!}
                     <div class="col-sm-10">
-                        {{ Form::password('new_password', ['id' => 'new_password', 'class' => 'form-control']) }}
+                        {!! Form::password('new_password', ['id' => 'new_password', 'class' => 'form-control']) !!}
                     </div>                    
                 </div>
-                <div class="form-group {{ $errors->first('new_password') ? 'has-error' : '' }}">
-                    {{ Form::label('new_password_confirmation', $errors->first('new_password') ?  $errors->first('new_password') : 'New Password Confirmation', ['class' => 'control-label col-sm-2']) }}
+                <div class="form-group {!! $errors->first('new_password') ? 'has-error' : '' !!}">
+                    {!! Form::label('new_password_confirmation', $errors->first('new_password') ?  $errors->first('new_password') : 'New Password Confirmation', ['class' => 'control-label col-sm-2']) !!}
                     <div class="col-sm-10">
-                        {{ Form::password('new_password_confirmation', ['id' => 'new_password_confirmation', 'class' => 'form-control']) }}
+                        {!! Form::password('new_password_confirmation', ['id' => 'new_password_confirmation', 'class' => 'form-control']) !!}
                     </div>                    
                 </div> 
                 <div class="form-group">
@@ -65,6 +65,6 @@
                     </div>                    
                 </div> 
             </div>
-        {{ Form::close() }}    
+        {!! Form::close() !!}
     </div>     
 @stop

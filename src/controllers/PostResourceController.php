@@ -1,5 +1,6 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
+use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
@@ -15,7 +16,7 @@ use Kjamesy\Cms\Models\PostTranslation;
 use Kjamesy\Utility\Facades\Utility;
 use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
-class PostResourceController extends \BaseController {
+class PostResourceController extends Controller {
     public function __construct(SentinelUserRepositoryInterface $userRepository)
     {
         $this->user = $userRepository->retrieveById(Session::get('userId'));

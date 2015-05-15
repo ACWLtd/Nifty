@@ -28,9 +28,9 @@
         }
 
     </style>
-    {{ HTML::style('packages/kjamesy/cms/angular-css/animate.min.css') }}
-    {{ HTML::script('packages/kjamesy/cms/js/jQuery-1.10.2.min.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-1.2.9/angular.min.js') }}
+    {!! HTML::style('packages/kjamesy/cms/angular-css/animate.min.css') !!}
+    {!! HTML::script('packages/kjamesy/cms/js/jQuery-1.10.2.min.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-1.2.9/angular.min.js') !!}
 @stop
 
 @section('page-title') <h3><i class="fa fa-language"></i> Languages</h3> @stop
@@ -45,17 +45,17 @@
 @stop
 
 @section('page-js')
-    {{ HTML::script('packages/kjamesy/cms/angular-modules/angular-ui-router-0.2.13.min.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-1.2.9/angular-resource.min.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-1.2.9/angular-animate.min.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-modules/ngStorage.min.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-modules/angular-locale_en-gb.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-modules/dirPagination.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-scripts/locales.app.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-scripts/locales.controllers.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-scripts/locales.services.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-scripts/filters.js') }}
-    {{ HTML::script('packages/kjamesy/cms/angular-scripts/directives.js') }}
+    {!! HTML::script('packages/kjamesy/cms/angular-modules/angular-ui-router-0.2.13.min.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-1.2.9/angular-resource.min.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-1.2.9/angular-animate.min.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-modules/ngStorage.min.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-modules/angular-locale_en-gb.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-modules/dirPagination.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-scripts/locales.app.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-scripts/locales.controllers.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-scripts/locales.services.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-scripts/filters.js') !!}
+    {!! HTML::script('packages/kjamesy/cms/angular-scripts/directives.js') !!}
 
 
 @stop

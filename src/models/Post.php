@@ -18,7 +18,7 @@ class Post extends Eloquent
     protected static $orderBy = ['updated_at', 'desc'];
 
     public function user(){
-        return $this->belongsTo('User');
+        return $this->belongsTo('Kjamesy\Cms\Models\User');
     }
 
     public function categories(){

@@ -1,13 +1,14 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Kjamesy\Cms\Helpers\Miscellaneous;
 use Kjamesy\Cms\Models\Locale;
 
-class LocaleResourceController extends \BaseController {
+class LocaleResourceController extends Controller {
     public function __construct(){
         $this->rules = Locale::$rules;
     }

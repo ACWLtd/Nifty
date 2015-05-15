@@ -1,7 +1,7 @@
 <?php namespace Kjamesy\Cms\Models;
 
+
 use Cartalyst\Sentry\Facades\Laravel\Sentry;
-use Illuminate\Support\Facades\Redirect;
 
 class User extends \Sentinel\Models\User
 {

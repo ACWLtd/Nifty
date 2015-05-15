@@ -8,7 +8,6 @@ use Kjamesy\Cms\Helpers\Miscellaneous;
 use Kjamesy\Cms\Models\User;
 use Sentinel\Repositories\Group\SentinelGroupRepositoryInterface;
 use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
-use Sentinel\UserController;
 
 class UserResourceController extends UserController {
     public function __construct(SentinelUserRepositoryInterface $userRepository, SentinelGroupRepositoryInterface $groupRepository){
@@ -42,8 +41,7 @@ class UserResourceController extends UserController {
 
         if( $validation !== true )
             return Response::json(['validation' => $validation]);
-        else
-        {
+        else {
             $groups = [];
 
             if ( count(Input::get('groups')) ) {

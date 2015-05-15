@@ -1,6 +1,7 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
@@ -15,7 +16,7 @@ use Kjamesy\Cms\Models\Locale;
 use Kjamesy\Cms\Models\User;
 use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
-class GalleryController extends \BaseController
+class GalleryController extends Controller
 {
     public function __construct(SentinelUserRepositoryInterface $userRepository) {
         $this->user = $userRepository->retrieveById(Session::get('userId'));

@@ -1,18 +1,9 @@
 # Nifty CMS
 
-A nifty little CMS written in Laravel 4.2 and AngularJS - intended for use in own projects
-
-## Upgrading from v0.3.0? 
-Run this to install the new database tables:
-
-```shell
-php artisan migrate --package=kjamesy/cms
-```
-
-If you had published the package config file, this is now deprecated.
+A nifty little CMS written in Laravel 5 and AngularJS - intended for use in own projects
 
 ## Steps to Follow
-Install a fresh copy of Laravel 4.2.* and configure database and mail settings.
+Install a fresh copy of Laravel 5.0.* and configure database and mail settings.
 
 Add the following to the composer.json file
 
@@ -47,8 +38,6 @@ Run ``` composer update ```
 Add the Service Providers to the providers array in ```app/config/app.php``` file:
 
 ```php
-'Sentinel\SentinelServiceProvider',
-'Kjamesy\Utility\UtilityServiceProvider',
 'Kjamesy\Cms\CmsServiceProvider',
 ```   
 
@@ -60,22 +49,16 @@ Route::get('/', ['as' => 'home', function() {
 }]);
 ``` 
 
+Publish the package files (migrations, views and assets): 
+
+```shell
+php artisan vendor:publish
+```
+
 Run the migrations:
 
 ```shell
-php artisan migrate --package=kjamesy/cms
+php artisan migrate
 ```
-
-Publish the package assets: 
-
-```shell
-php artisan asset:publish kjamesy/cms
-```
-
-__Optional:__ You can publish the package view files if you want to modify the views:
-
-```shell
-	php artisan view:publish kjamesy/cms
-```  
 
 Assuming default configuration, visit  ```/admin``` and login with Username ```jamesy``` and Password ```password```

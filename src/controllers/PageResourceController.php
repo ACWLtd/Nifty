@@ -1,5 +1,6 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
+use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
@@ -12,10 +13,10 @@ use Kjamesy\Cms\Models\Locale;
 use Kjamesy\Cms\Models\Meta;
 use Kjamesy\Cms\Models\Page;
 use Kjamesy\Cms\Models\PageTranslation;
-use Kjamesy\Utility\Facades\Utility;
+use Kjamesy\Utility\Utility;
 use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
-class PageResourceController extends \BaseController {
+class PageResourceController extends Controller {
     public function __construct(SentinelUserRepositoryInterface $userRepository)
     {
         $this->user = $userRepository->retrieveById(Session::get('userId'));

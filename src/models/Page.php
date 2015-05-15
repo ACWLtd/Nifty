@@ -19,7 +19,7 @@ class Page extends Node
     protected static $orderBy = 'lft';
 
     public function user(){
-        return $this->belongsTo('User');
+        return $this->belongsTo('Kjamesy\Cms\Models\User');
     }
 
     public function pagetranslations(){
