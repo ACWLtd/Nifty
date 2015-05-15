@@ -18,8 +18,13 @@
 
     },
     "autoload": {
-        "psr-4": {
-            "Kjamesy\\Cms\\": "src/"
-        }
+      "classmap": [
+        "src/controllers",
+        "src/helpers",
+        "src/models"
+      ],
+      "psr-4": {
+        "Kjamesy\\Cms\\": "src/Cms"
+      }
     }
 }
