@@ -15,7 +15,7 @@ use Kjamesy\Cms\Models\Meta;
 use Kjamesy\Cms\Models\Post;
 use Kjamesy\Cms\Models\PostTranslation;
 use Kjamesy\Cms\Models\User;
-use Kjamesy\Utility\Facades\Utility;
+use Kjamesy\Utility\Utility;
 use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
 class PostController extends Controller
