@@ -58,7 +58,6 @@ class CmsServiceProvider extends ServiceProvider
     {
         $this->app->register('Sentinel\SentinelServiceProvider');
         $this->app->register('Illuminate\Html\HtmlServiceProvider');
-        $this->app->register('Kjamesy\Utility\UtilityServiceProvider');
 
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', 'Illuminate\Html\FormFacade');
