@@ -32,9 +32,9 @@
             </span>
             <span data-ng-if="! formTranslation.hiddenEditor" class="btn btn-link btn-rect" data-ng-click="toggleEditor($index, true)" title="Close Editor">
                 Close Editor
-            </span>                     
+            </span>
             <textarea id="image-caption-{{ $index }}" data-ng-show="formTranslation.hiddenEditor" class="form-control" data-ng-trim="" rows="2" data-ng-model="formTranslation.caption" placeholder="Image Caption"></textarea>
-            <div data-ng-if="! formTranslation.hiddenEditor" ckeditor="" data-ng-model="$parent.formTranslation.caption"></div>
+            <div data-ng-if="! formTranslation.hiddenEditor" ckeditor="editorOptions" data-ng-model="$parent.formTranslation.caption"></div>
         </div>               
         <div class="form-group col-xs-1" style="margin-top: 30px;">                 
             <span data-ng-hide="formTranslation.saving" class="btn btn-metis-5 btn-rect" data-ng-click="processTranslation(formTranslation)" title="Process Translation" style="margin-bottom: 5px;">

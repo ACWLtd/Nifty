@@ -13,7 +13,7 @@ use Kjamesy\Cms\Models\Locale;
 use Kjamesy\Cms\Models\Meta;
 use Kjamesy\Cms\Models\Post;
 use Kjamesy\Cms\Models\PostTranslation;
-use Kjamesy\Utility\Facades\Utility;
+use Kjamesy\Utility\Utility;
 use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
 class PostResourceController extends Controller {

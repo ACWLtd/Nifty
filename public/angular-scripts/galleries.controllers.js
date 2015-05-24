@@ -577,7 +577,10 @@ galleriesAppControllers.controller('TranslationsController', ['$scope', '$stateP
 
 	function initialSettings(situation) {
 		if ( situation == 'boot' ) {
-
+            $scope.editorOptions = {
+                customConfig: $scope.ckEditorLight
+            };
+            
 			$scope.options = {};
 			$scope.options.galleryId = $stateParams.galleryId; 
 			$scope.options.showEditor = false;

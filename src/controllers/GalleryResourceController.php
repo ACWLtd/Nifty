@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Kjamesy\Cms\Helpers\Miscellaneous;
 use Kjamesy\Cms\Models\Gallery;
-use Kjamesy\Utility\Facades\Utility;
+use Kjamesy\Utility\Utility;
 
 class GalleryResourceController extends Controller {
     public function __construct(){
