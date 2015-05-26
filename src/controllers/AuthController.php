@@ -1,19 +1,17 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
-
-use App\Http\Controllers\Controller;
 use Cartalyst\Sentry\Facades\Laravel\Sentry;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
+use Illuminate\Routing\Controller as BaseController;
 use Sentinel\FormRequests\LoginRequest;
 use Sentinel\Repositories\Session\SentinelSessionRepositoryInterface;
 
 
-class AuthController extends Controller {
+class AuthController extends BaseController {
 
     public function __construct(SentinelSessionRepositoryInterface $sessionManager) {
         $this->session = $sessionManager;

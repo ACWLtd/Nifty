@@ -1,6 +1,5 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
@@ -8,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
+use Illuminate\Routing\Controller as BaseController;
 use Kjamesy\Cms\Helpers\Miscellaneous;
 use Kjamesy\Cms\Models\Page;
 use Kjamesy\Cms\Models\PageTranslation;
@@ -17,7 +17,7 @@ use Kjamesy\Cms\Models\User;
 use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
 
-class UserController extends Controller {
+class UserController extends BaseController {
 
     public function __construct(SentinelUserRepositoryInterface $userRepository){
         $this->userRepository = $userRepository;

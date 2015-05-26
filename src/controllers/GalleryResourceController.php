@@ -1,16 +1,15 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
-
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Controller as BaseController;
 use Kjamesy\Cms\Helpers\Miscellaneous;
 use Kjamesy\Cms\Models\Gallery;
 use Kjamesy\Utility\Utility;
 
-class GalleryResourceController extends Controller {
+class GalleryResourceController extends BaseController {
     public function __construct(){
         $this->rules = Gallery::$rules;
     }
