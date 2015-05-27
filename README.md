@@ -39,7 +39,9 @@ Add the Service Providers to the providers array in ```app/config/app.php``` fil
 
 ```php
 'Kjamesy\Cms\CmsServiceProvider',
-```   
+``` 
+  
+PS: You may want to add the CmsServiceProvider BEFORE the ```RouteServiceProvider``` so the package's routes take precendence over those in your app.
 
 Ensure you have a route named 'home' in your ```app/routes.php``` file. You could modify the default route to:
 
