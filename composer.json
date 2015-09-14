@@ -19,7 +19,8 @@
       "classmap": [
         "src/controllers",
         "src/helpers",
-        "src/models"
+        "src/models",
+        "src/middleware"
       ],
       "psr-4": {
         "Kjamesy\\Cms\\": "src/Cms"
