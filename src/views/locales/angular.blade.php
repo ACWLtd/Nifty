@@ -5,7 +5,7 @@
 @section('page-css')
     <style>
         table {
-            font-size: 13px;
+            font-size: 14px;
         }
         .more-options {
             margin-top: 5px;

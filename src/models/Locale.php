@@ -10,7 +10,8 @@ class Locale extends Eloquent
 
     protected static $cacheMinutes = 1440;
 
-    public function pagetranslations(){
+    public function pagetranslations()
+    {
         return $this->hasMany('Kjamesy\Cms\Models\PageTranslation', 'locale_id');
     }
 

@@ -8,14 +8,44 @@
         <meta content="James Ilaki" name="author">
         <link href="{{asset('favicon.png')}}" rel="shortcut icon">
         <title>Nifty | @yield('title') </title>
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        {!! HTML::style('packages/kjamesy/cms/bootstrap3.1.1/css/bootstrap.min.css') !!}
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         {!! HTML::style('packages/kjamesy/cms/template/css/main.css') !!}
         {!! HTML::style('packages/kjamesy/cms/template/css/theme.css') !!}
+        <style>
+            body {
+                font-family: calibri, Helvetica, sans-serif;
+                font-size: 16px;
+                background: url("{!! asset('packages/kjamesy/cms/template/img/pattern/denim.png') !!}");
+            }
+            #wrap{
+                background: url("{!! asset('packages/kjamesy/cms/template/img/pattern/denim.png') !!}");
+            }
+            .user-media, #menu, #menu .nav-header, #menu > li > a, .head .main-bar h3, .wrap, header.head, #footer, #footer a {
+                color: #FFF;
+                background: url("{!! asset('packages/kjamesy/cms/template/img/pattern/denim.png') !!}");
+            }
+            #menu li > ul, #menu > li.active > a {
+                background: url("{!! asset('packages/kjamesy/cms/template/img/pattern/classy_fabric.png') !!}");
+            }
+            .search-bar {
+                border: medium none !important;
+                padding: 0 !important;
+            }
+            abbr[title], abbr[data-original-title] {
+                border-bottom: medium none;
+            }
+            .form-control, .alert {
+                border-radius: 0;
+            }
+            .form-control, .form-control:focus, .has-error .form-control:focus {
+                box-shadow: none;
+            }
+        </style>
         @yield('page-css')
         <!--[if lt IE 9]>
-            {!! HTML::script('packages/kjamesy/cms/bootstrap/js/html5shiv.js') !!}
-            {!! HTML::script('packages/kjamesy/cms/bootstrap/js/respond.min.js') !!}
+            {!! HTML::script('packages/kjamesy/cms/bootstrap3.1.1/js/html5shiv.js') !!}
+            {!! HTML::script('packages/kjamesy/cms/bootstrap3.1.1/js/respond.min.js') !!}
         <![endif]-->
     </head>
     <body>
@@ -30,7 +60,7 @@
                     <div class="topnav">
                         <div class="btn-toolbar">
                             <div class="btn-group">
-                                <a href="{!! URL::route('logout') !!}" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom" class="btn btn-danger btn-sm btn-rect">
+                                <a href="{!! URL::route('auth.logout') !!}" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom" class="btn btn-danger btn-sm btn-rect">
                                     <i class="fa fa-power-off"></i>
                                 </a>
                             </div>
@@ -61,7 +91,7 @@
             <p><a href="http://acw.uk.com" target="_blank"> {!!date('Y') !!} &copy;James @ACW</a></p>
         </div>
 
-        {!! HTML::script('packages/kjamesy/cms/bootstrap/js/bootstrap.min.js') !!}
+        {!! HTML::script('packages/kjamesy/cms/bootstrap3.1.1/js/bootstrap.min.js') !!}
         {!! HTML::script('packages/kjamesy/cms/template/js/main.min.js') !!}
 
         @yield('page-js')

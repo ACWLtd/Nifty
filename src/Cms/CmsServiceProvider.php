@@ -1,6 +1,7 @@
 <?php namespace Kjamesy\Cms;
 
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class CmsServiceProvider extends ServiceProvider
@@ -10,10 +11,9 @@ class CmsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public  function boot()
+    public  function boot(Router $router)
     {
         include __DIR__.'/../routes.php';
-        include __DIR__.'/../filters.php';
 
         /*
          * First check whether the views have been published
@@ -47,6 +47,11 @@ class CmsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../public' => public_path('packages/kjamesy/cms'),
         ], 'public');
+
+        /**
+         * Register our custom middleware
+         */
+        $router->middleware('manage_content', \Kjamesy\Cms\Middleware\ManageContentMiddleware::class);
     }
 
     /**
@@ -56,15 +61,12 @@ class CmsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register('Sentinel\SentinelServiceProvider');
         $this->app->register('Illuminate\Html\HtmlServiceProvider');
         $this->app->register('Kjamesy\Utility\UtilityServiceProvider');
 
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', 'Illuminate\Html\FormFacade');
         $loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
-
-
     }
 
 }

@@ -42,7 +42,6 @@ class LocaleResourceController extends BaseController {
         }
     }
 
-
     public function update($id){
         $inputs = [];
         foreach( Input::all() as $key => $input ) {
@@ -65,6 +64,5 @@ class LocaleResourceController extends BaseController {
             return Response::json(['success' => 'Locale successfully updated', 'updated_at' => $locale->updated_at]);
         }
     }
-
 
 }

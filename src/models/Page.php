@@ -18,11 +18,13 @@ class Page extends Node
     protected static $cache_minutes = 1440;
     protected static $orderBy = 'lft';
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo('Kjamesy\Cms\Models\User');
     }
 
-    public function pagetranslations(){
+    public function pagetranslations()
+    {
         return $this->hasMany('Kjamesy\Cms\Models\PageTranslation'); //'page_id'
     }
 

@@ -1,18 +1,17 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Controller as BaseController;
 use Kjamesy\Cms\Helpers\Miscellaneous;
 use Kjamesy\Cms\Models\Event;
-use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
 class EventResourceController extends BaseController {
-    public function __construct(SentinelUserRepositoryInterface $userRepository){
-        $this->user = $userRepository->retrieveById(Session::get('userId'));
+    public function __construct(){
+        $this->user = Auth::user();
         $this->rules = Event::$rules;
     }
 

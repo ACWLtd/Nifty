@@ -64,16 +64,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Role</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-static">
-                            @foreach ( $roles as $role )
-                                {!! $role->name !!}
-                            @endforeach
-                        </p>
-                    </div>                    
-                </div>                 
-                <div class="form-group">
                     <label class="col-sm-2 control-label">User Since</label>
                     <div class="col-sm-10">
                         <p class="form-control-static">

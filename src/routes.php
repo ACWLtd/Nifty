@@ -1,12 +1,20 @@
 <?php
 
-/*
- * First Disable Sentinel routes
- */
-Config::set('sentinel.routes_enabled', false);
+Route::group(['prefix' => 'auth', 'namespace' => 'Kjamesy\Cms\Controllers\Auth', 'as' => 'auth.'], function() {
+    Route::get('register', ['as' => 'register', 'uses' => 'AuthController@getRegister']);
+    Route::post('register', ['as' => 'post_register', 'uses' => 'AuthController@postRegister']);
 
-$login = 'login';
-$logout = 'logout';
+    Route::get('login', ['as' => 'login', 'uses' => 'AuthController@getLogin']);
+    Route::post('login', ['as' => 'post_login', 'uses' => 'AuthController@postLogin']);
+    Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@getLogout']);
+
+    Route::get('password/email', ['as' => 'password_email', 'uses' => 'PasswordController@getEmail']);
+    Route::post('password/email', ['as' => 'post_password_email', 'uses' => 'PasswordController@postEmail']);
+    Route::get('password/reset/{token}', ['as' => 'password_reset', 'uses' => 'PasswordController@getReset']);
+    Route::post('password/reset', ['as' => 'post_password_reset', 'uses' => 'PasswordController@postReset']);
+
+});
+
 $admin = 'admin';
 $pages = 'admin/pages';
 $posts = 'admin/posts';
@@ -15,11 +23,14 @@ $galleries = 'admin/galleries';
 $events = 'admin/events';
 $users = 'admin/users';
 
-Route::get($login, ['as' => 'login', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@login']);
+Route::get('debug', function() {
+    $user = Auth::user(); //\Kjamesy\Cms\Models\User::first();
+//    $user->password = bcrypt('password2');
 
-Route::post($login, ['as' => 'do-login', 'before' => 'cms/csrf', 'uses' => 'Kjamesy\Cms\Controllers\AuthController@do_login']);
 
-Route::group(['before' => 'cms/auth', 'namespace' => 'Kjamesy\Cms\Controllers'], function() use($admin, $pages, $posts, $locales, $galleries, $events, $users, $logout) {
+});
+
+Route::group(['middleware' => 'auth', 'namespace' => 'Kjamesy\Cms\Controllers'], function() use($admin, $pages, $posts, $locales, $galleries, $events, $users) {
 
     Route::get($admin, ['as' => 'admin', function() {
         return Redirect::route('pages.landing');
@@ -62,12 +73,12 @@ Route::group(['before' => 'cms/auth', 'namespace' => 'Kjamesy\Cms\Controllers'],
     Route::resource($events . '/event-resource', 'EventResourceController');
 
     /**********************USERS************************/
-    Route::get($users, ['as' => 'users.landing', 'uses' => 'UserController@index']);
+    Route::get($users, ['as' => 'users.landing', 'middleware' => 'manage_content', 'uses' => 'UserController@index']);
     Route::resource($users . '/users-resource', 'UserResourceController');
     Route::get($users . '/profile', ['as' => 'users.profile', 'uses' => 'UserController@get_profile']);
     Route::get($users . '/profile/password', ['as' => 'users.profile.password', 'uses' => 'UserController@get_profile_password']);
 
-    Route::group(['before' => 'cms/csrf'], function() use($pages, $posts, $locales, $galleries, $events, $users) {
+//    Route::group(['before' => 'cms/csrf'], function() use($pages, $posts, $locales, $galleries, $events, $users) {
 
         /*****************PAGES*******************/
         Route::post($pages . '/{action}/bulk-actions', ['as' => 'pages.bulk-actions', 'uses' => 'PageController@do_bulk_actions']);
@@ -111,7 +122,6 @@ Route::group(['before' => 'cms/auth', 'namespace' => 'Kjamesy\Cms\Controllers'],
         Route::post($users . '/profile/update', ['as' => 'users.profile.update', 'uses' => 'UserController@update_profile']);
         Route::post($users . '/profile/password/update', ['as' => 'users.profile.password.update', 'uses' => 'UserController@update_profile_password']);
         Route::post($users . '/{action}/do-action', ['as' => 'users.do-action', 'uses' => 'UserController@do_action']);
-    });
+//    });
 
-    Route::get($logout, ['as' => 'logout', 'uses' => 'AuthController@logout']);
 });

@@ -16,7 +16,7 @@ class PostTranslation extends Eloquent
     protected static $cache_minutes = 1440;
 
     public function user(){
-        return $this->belongsTo('User');
+        return $this->belongsTo('Kjamesy\Cms\Models\User');
     }
 
     public function post(){

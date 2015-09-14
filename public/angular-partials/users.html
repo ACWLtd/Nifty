@@ -137,13 +137,13 @@
                             <td>
                                 <span class="btn btn-metis-5 btn-sm btn-rect" title="Edit" data-ng-click="editUser(user)"><i class="fa fa-edit"></i></span>
                             </td>
+                            <!--<td>-->
+                                <!--<span data-ng-if="user.status == 'Suspended'" class="btn btn-success btn-sm btn-rect" title="Unsuspend" data-ng-click="unSuspend(user)"><i class="fa fa-clock-o"></i></span>-->
+                                <!--<span data-ng-if="user.status != 'Suspended'" class="btn btn-default btn-sm btn-rect" title="Suspend" data-ng-click="suspend(user)"><i class="fa fa-clock-o"></i></span>-->
+                            <!--</td>-->
                             <td>
-                                <span data-ng-if="user.status == 'Suspended'" class="btn btn-success btn-sm btn-rect" title="Unsuspend" data-ng-click="unSuspend(user)"><i class="fa fa-clock-o"></i></span>
-                                <span data-ng-if="user.status != 'Suspended'" class="btn btn-default btn-sm btn-rect" title="Suspend" data-ng-click="suspend(user)"><i class="fa fa-clock-o"></i></span>
-                            </td>
-                            <td>
-                                <span data-ng-if="user.status == 'Banned'" class="btn btn-success btn-sm btn-rect" title="Unban" data-ng-click="unBan(user)"><i class="fa fa-ban"></i></span>
-                                <span data-ng-if="user.status != 'Banned'" class="btn btn-metis-3 btn-sm btn-rect" title="Ban" data-ng-click="ban(user)"><i class="fa fa-ban"></i></span>
+                                <span data-ng-if="user.status == 'Inactive'" class="btn btn-success btn-sm btn-rect" title="Activate" data-ng-click="unBan(user)"><i class="fa fa-check"></i></span>
+                                <span data-ng-if="user.status != 'Inactive'" class="btn btn-metis-3 btn-sm btn-rect" title="Deactivate" data-ng-click="ban(user)"><i class="fa fa-ban"></i></span>
                             </td>
                             <td>
                                 <span class="btn btn-metis-1 btn-sm btn-rect" title="Delete" data-ng-click="destroy(user)" data-ng-hide="user.deleting"><i class="fa fa-trash"></i></span>

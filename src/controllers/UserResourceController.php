@@ -1,31 +1,30 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Session;
 use Kjamesy\Cms\Helpers\Miscellaneous;
+use Kjamesy\Cms\Models\Role;
 use Kjamesy\Cms\Models\User;
-use Sentinel\Repositories\Group\SentinelGroupRepositoryInterface;
-use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
 class UserResourceController extends UserController {
-    public function __construct(SentinelUserRepositoryInterface $userRepository, SentinelGroupRepositoryInterface $groupRepository){
-        $this->userRepository = $userRepository;
-        $this->groupRepository = $groupRepository;
-        $this->user = $this->userRepository->retrieveById(Session::get('userId'));
+    public function __construct(){
+        $this->user = Auth::user();
         $this->rules = User::$rules;
         $this->newUserRules = User::$newUserRules;
-        $this->defaultGroup = ['User' => 1];
+        $this->defaultRole = [3];
     }
 
     public function index(){
-        $users = $this->userRepository->all(); //User::getUserResource();
         $user = $this->user;
-        $groups = $this->groupRepository->all();
+        $users = User::getUserResource([$exceptId = $user->id]);
+        $groups = Role::getRoleResource();
 
-        foreach($users as $aUser)
-            $aUser->groups = $aUser->getGroups();
+        foreach($users as $aUser){
+            $aUser->status = $aUser->active ? 'Active' : 'Inactive';
+            $aUser->groups = $aUser->roles;
+        }
 
         return Response::json(compact('users', 'user', 'groups'));
     }
@@ -45,24 +44,29 @@ class UserResourceController extends UserController {
             $groups = [];
 
             if ( count(Input::get('groups')) ) {
-                foreach ( Input::get('groups') as $selection )
-                    $groups[$selection] = 1;
+                foreach ( Input::get('groups') as $groupName ) {
+                    if ( $group = Role::whereName($groupName)->first() ){
+                        $groups[] = $group->id;
+                    }
+                }
             }
             else {
-                $groups = $this->defaultGroup;
+                $groups = $this->defaultRole;
             }
+
+            $groups = count($groups) ? $groups : $this->defaultRole;
 
             $user = new User;
             $user->first_name = $inputs['first_name'];
             $user->last_name = $inputs['last_name'];
             $user->email = $inputs['email'];
             $user->username = Input::has('username') ? $inputs['username'] : NULL;
-            $user->password = $inputs['password_confirmation'];
-            $user->activated = 1;
+            $user->password = bcrypt( $inputs['password_confirmation'] );
+            $user->active = 1;
             $user->save();
 
-            $this->userRepository->changeGroupMemberships($user->id, $groups);
-            $user->groups = $user->getGroups();
+            $user->roles()->sync($groups);
+            $user->groups = $user->roles;
 
             Cache::flush();
             return Response::json(['success' => 'User successfully saved', 'user' => $user]);
@@ -71,7 +75,7 @@ class UserResourceController extends UserController {
 
 
     public function update($id){
-        $user = $this->userRepository->retrieveById($id);
+        $user = User::find($id);
 
         $inputs = [];
         foreach( Input::all() as $key => $input ) {
@@ -81,7 +85,7 @@ class UserResourceController extends UserController {
 
         if ( $inputs['email'] == $user->email )
             unset($this->rules['email']);
-        if ( Input::has('username') && $inputs['username'] == $user->username)
+        if ( Input::has('username') && $inputs['username'] == $user->username )
             unset($this->rules['username']);
 
         $validation = Miscellaneous::validate($inputs, $this->rules);
@@ -92,22 +96,28 @@ class UserResourceController extends UserController {
             $groups = [];
 
             if ( count(Input::get('groups')) ) {
-                foreach ( Input::get('groups') as $selection )
-                    $groups[$selection] = 1;
+                foreach ( Input::get('groups') as $groupName ) {
+                    if ( $group = Role::whereName($groupName)->first() ){
+                        $groups[] = $group->id;
+                    }
+                }
             }
             else {
-                $groups = $this->defaultGroup;
+                $groups = $this->defaultRole;
             }
+
+            $groups = count($groups) ? $groups : $this->defaultRole;
 
             $user->first_name = $inputs['first_name'];
             $user->last_name = $inputs['last_name'];
             $user->email = $inputs['email'];
             $user->username = Input::has('username') ? $inputs['username'] : NULL;
             if ( Input::has('password') )
-                $user->password = $inputs['password_confirmation'];
+                $user->password = bcrypt($inputs['password_confirmation']);
             $user->save();
 
-            $this->userRepository->changeGroupMemberships($id, $groups);
+            $user->roles()->sync($groups);
+            $user->groups = $user->roles;
 
             Cache::flush();
             return Response::json(['success' => 'User successfully updated', 'updated_at' => $user->updated_at]);

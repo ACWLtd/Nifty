@@ -1,11 +1,11 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Illuminate\Routing\Controller as BaseController;
 use Kjamesy\Cms\Helpers\Miscellaneous;
@@ -14,14 +14,12 @@ use Kjamesy\Cms\Models\PageTranslation;
 use Kjamesy\Cms\Models\Post;
 use Kjamesy\Cms\Models\PostTranslation;
 use Kjamesy\Cms\Models\User;
-use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
 
 class UserController extends BaseController {
 
-    public function __construct(SentinelUserRepositoryInterface $userRepository){
-        $this->userRepository = $userRepository;
-        $this->user = $this->userRepository->retrieveById(Session::get('userId'));
+    public function __construct(){
+        $this->user = Auth::user();
         $this->isAdmin = User::isAdmin( $this->user );
         $this->logged_in_for = $this->user->last_login->diffForHumans();
         $this->rules = User::$rules;
@@ -47,7 +45,6 @@ class UserController extends BaseController {
             'logged_in_for' => $this->logged_in_for,
             'activeParent' => $this->activeParent,
             'active' => 'profile',
-            'roles' => $this->user->getGroups(),
             'userSince' => $this->user->created_at->diffForHumans(),
             'userCreatedAt' => $this->user->created_at->format('D jS \\of M, Y H:i'),
             'loggedInAt' => $this->user->last_login->format('D jS \\of M, Y H:i')
@@ -103,7 +100,7 @@ class UserController extends BaseController {
             return Redirect::back()->withErrors($validation)->withValidationerror('')->withInput();
 
         else {
-            $this->user->password = Input::get('new_password');
+            $this->user->password = bcrypt(Input::get('new_password'));
             $this->user->save();
 
             return Redirect::back()->withSuccess('Password updated.');
@@ -112,24 +109,28 @@ class UserController extends BaseController {
 
     public function do_action($action) {
         $id = Input::get('user')['id'];
+        $user = User::find($id);
+
         $suffix = '';
 
         switch ($action) {
-            case 'suspend':
-                $this->userRepository->suspend($id);
-                $suffix = 'suspended for 15 minutes';
-                break;
-            case 'unSuspend':
-                $this->userRepository->unsuspend($id);
-                $suffix = 'unsuspended';
-                break;
+//            case 'suspend':
+//                $this->userRepository->suspend($id);
+//                $suffix = 'suspended for 15 minutes';
+//                break;
+//            case 'unSuspend':
+//                $this->userRepository->unsuspend($id);
+//                $suffix = 'unsuspended';
+//                break;
             case 'ban':
-                $this->userRepository->ban($id);
-                $suffix = 'banned';
+                $user->active = 0;
+                $user->save();
+                $suffix = 'deactivated';
                 break;
             case 'unBan':
-                $this->userRepository->unban($id);
-                $suffix = 'unbanned';
+                $user->active = 1;
+                $user->save();
+                $suffix = 'activated';
                 break;
             case 'destroy':
                 $pages = Page::getPagesBelongingToUser($id);
@@ -164,13 +165,13 @@ class UserController extends BaseController {
                     }
                 }
 
-                $this->userRepository->destroy($id);
+                $user->delete();
                 $suffix = 'destroyed. All pages/posts belonging to the destroyed user have been assigned to the currently logged in user';
                 break;
         }
 
         Cache::flush();
-        return Response::json(["success" => "User successfully $suffix", 'user' => $this->userRepository->retrieveById($id)]);
+        return Response::json(["success" => "User successfully $suffix", 'user' => $user]);
     }
 
 }

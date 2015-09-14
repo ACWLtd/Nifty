@@ -1,10 +1,10 @@
 <?php namespace Kjamesy\Cms\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Illuminate\Routing\Controller as BaseController;
@@ -16,12 +16,12 @@ use Kjamesy\Cms\Models\Post;
 use Kjamesy\Cms\Models\PostTranslation;
 use Kjamesy\Cms\Models\User;
 use Kjamesy\Utility\Utility;
-use Sentinel\Repositories\User\SentinelUserRepositoryInterface;
 
 class PostController extends BaseController
 {
-    public function __construct(SentinelUserRepositoryInterface $userRepository){
-        $this->user = $userRepository->retrieveById(Session::get('userId'));
+    public function __construct(){
+        $this->middleware('manage_content');
+        $this->user = Auth::user();
         $this->isAdmin = User::isAdmin( $this->user );
         $this->logged_in_for = $this->user->last_login->diffForHumans();
         $this->translationRules = PostTranslation::$rules;

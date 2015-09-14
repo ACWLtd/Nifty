@@ -16,14 +16,14 @@ usersAppControllers.controller('UsersController', ['$rootScope', '$scope', '$win
 
 					usersArr.push(value);
 				}
-			}			
+			}
 		});
 
 		$scope.users = usersArr;
 
 		angular.forEach(data.groups, function(group, index) {
-			$scope.options.groups.push({ name: group.name }); 
-		});	
+			$scope.options.groups.push({ name: group.name });
+		});
 	});
 
 	$scope.createUser = function() {
@@ -41,7 +41,7 @@ usersAppControllers.controller('UsersController', ['$rootScope', '$scope', '$win
 		$scope.options.addingUser = true;
 		$scope.userCreate.groups = [$scope.selects.groups.name];
 
-		Users.save($scope.userCreate, function(response) { 
+		Users.save($scope.userCreate, function(response) {
 			if ( response.validation ) {
 				Miscellaneous.addRemoveClass('.alert.animate', 'alert-info alert-success', 'alert-danger');
 
@@ -71,9 +71,9 @@ usersAppControllers.controller('UsersController', ['$rootScope', '$scope', '$win
 					$scope.$apply();
 				}, 2000);
 			}
-	
+
 		});
-	};	
+	};
 
 	$scope.editUser = function(inputUser) {
 		var user = angular.copy(inputUser, user);
@@ -92,7 +92,7 @@ usersAppControllers.controller('UsersController', ['$rootScope', '$scope', '$win
 					}
 				});
 			}
-		});		
+		});
 
 		$scope.userEdit = user;
 
@@ -108,7 +108,7 @@ usersAppControllers.controller('UsersController', ['$rootScope', '$scope', '$win
 		$scope.options.updatingUser = true;
 		$scope.userEdit.groups = [$scope.selects.groups.name];
 
-		Users.update({ id:$scope.userEdit.id }, $scope.userEdit, function(response) { 
+		Users.update({ id:$scope.userEdit.id }, $scope.userEdit, function(response) {
 			if ( response.validation ) {
 				Miscellaneous.addRemoveClass('.alert.animate', 'alert-info alert-success', 'alert-danger');
 
@@ -149,12 +149,12 @@ usersAppControllers.controller('UsersController', ['$rootScope', '$scope', '$win
 					$scope.$apply();
 				}, 5000);
 			}
-	
+
 		});
 	};
 
-	$scope.suspend = function(user) { doAction('suspend', user); };
-	$scope.unSuspend = function(user) { doAction('unSuspend', user); };
+	//$scope.suspend = function(user) { doAction('suspend', user); };
+	//$scope.unSuspend = function(user) { doAction('unSuspend', user); };
 	$scope.ban = function(user) { doAction('ban', user); };
 	$scope.unBan = function(user) { doAction('unBan', user); };
 	$scope.destroy = function(user) { doAction('destroy', user); };
@@ -174,19 +174,19 @@ usersAppControllers.controller('UsersController', ['$rootScope', '$scope', '$win
 				$scope.formFields.message = "<i class='fa fa-check'></i> " + response.success;
 
 				switch (action) {
-					case 'suspend':
-						user.status = 'Suspended';
-						break;
-					case 'unSuspend':
-						user.status = 'Active';
-						break;	
+					//case 'suspend':
+					//	user.status = 'Suspended';
+					//	break;
+					//case 'unSuspend':
+					//	user.status = 'Active';
+					//	break;
 					case 'ban':
-						user.status = 'Banned';
+						user.status = 'Inactive';
 						break;
 					case 'unBan':
 						user.status = 'Active';
-						break;		
-					case 'destroy':	
+						break;
+					case 'destroy':
 						user.deleting = false;
 						var looping = true;
 						angular.forEach($scope.users, function(aUser, index) {
@@ -196,30 +196,30 @@ usersAppControllers.controller('UsersController', ['$rootScope', '$scope', '$win
 									looping = false;
 								}
 							}
-						});	
+						});
 
-						break;						
+						break;
 				}
-	
+
 				$window.setTimeout(function() {
 					initialSettings('useredit');
 					$scope.$apply();
 				}, 5000);
 			}
-		});		
+		});
 	}
 
 	function initialSettings(situation) {
 		if ( situation == 'boot' ) {
-			$scope.users = [];			
+			$scope.users = [];
 			$scope.currentPage = 1;
-		  	$scope.pageSize = 0;		
+			$scope.pageSize = 0;
 			$scope.formFields = {};
 			$scope.formFields.hasMessage = false;
-			$scope.formFields.message = 'Server message';	
-			$scope.userCreate = {};		
+			$scope.formFields.message = 'Server message';
+			$scope.userCreate = {};
 			$scope.options = {};
-			$scope.options.orderParam = 'email';	
+			$scope.options.orderParam = 'email';
 			$scope.options.groups = [];
 			$scope.options.creatingUser = false;
 			$scope.options.addingUser = false;
@@ -232,12 +232,12 @@ usersAppControllers.controller('UsersController', ['$rootScope', '$scope', '$win
 
 		else if ( situation == 'useredit' ) {
 			$scope.formFields.hasMessage = false;
-			$scope.formFields.message = 'Server message';				
+			$scope.formFields.message = 'Server message';
 			$scope.selects.groups = [];
 			$scope.userCreate = {};
 			$scope.userEdit = {};
 			$scope.options.creatingUser = false;
-			$scope.options.addingUser = false;			
+			$scope.options.addingUser = false;
 			$scope.options.editingUser = false;
 			$scope.options.updatingUser = false;
 			Miscellaneous.addRemoveClass('.alert.animate', 'alert-success alert-danger', 'alert-info');
